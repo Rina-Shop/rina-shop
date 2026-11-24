@@ -687,7 +687,7 @@
                         </div>
 
                         <div class="flex items-center gap-3 pt-4">
-                            <button type="submit" class="px-6 py-2.5 rounded-xl gold-gradient-btn text-black font-extrabold text-xs">
+                            <button type="submit" id="saveAccountBtn" class="px-6 py-2.5 rounded-xl gold-gradient-btn text-black font-extrabold text-xs">
                                 <i class="fa-solid fa-floppy-disk mr-1"></i> သိမ်းဆည်းမည် (Save Listing)
                             </button>
                             <button type="button" onclick="cancelEditForm()" class="px-4 py-2.5 rounded-xl bg-gray-800 text-gray-300 text-xs hover:bg-gray-700">
@@ -1070,7 +1070,7 @@
                         let width = img.width;
                         let height = img.height;
 
-                        const maxDim = 600;
+                        const maxDim = 480;
                         if (width > maxDim || height > maxDim) {
                             if (width > height) {
                                 height = Math.round((height * maxDim) / width);
@@ -1086,7 +1086,7 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        resolve(canvas.toDataURL('image/jpeg', 0.62));
+                        resolve(canvas.toDataURL('image/jpeg', 0.52));
                     };
                     img.onerror = () => resolve(event.target.result);
                     img.src = event.target.result;
@@ -1096,12 +1096,12 @@
             });
         }
 
-        function fitImagesWithinFirestoreLimit(imgList, maxBytes = 820000) {
+        function fitImagesWithinFirestoreLimit(imgList, maxBytes = 650000) {
             const result = [];
             let totalBytes = 0;
             for (const item of imgList) {
                 const len = typeof item === 'string' ? item.length : 0;
-                if (totalBytes + len > maxBytes) break;
+                if (result.length > 0 && totalBytes + len > maxBytes) break;
                 result.push(item);
                 totalBytes += len;
             }
@@ -1988,6 +1988,12 @@
                 return;
             }
 
+            const saveBtn = document.getElementById('saveAccountBtn');
+            if (saveBtn) {
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> သိမ်းဆည်းနေပါသည်...`;
+            }
+
             const editId = document.getElementById('editAccountId').value;
             const title = document.getElementById('accTitle').value.trim();
             const rank = formatHighRankLabel(document.getElementById('accRank').value);
@@ -2004,7 +2010,7 @@
             const rawImages = uploadedImagesBase64.length > 0 ? [...uploadedImagesBase64] : ['https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80'];
             const safeImages = fitImagesWithinFirestoreLimit(rawImages);
             if (safeImages.length < rawImages.length) {
-                showToast(`Firestore 1MB limit အတွင်း ရှေ့ဆုံး ${safeImages.length} ပုံကို သိမ်းပေးလိုက်ပါသည်`, 'info');
+                showToast(`ပုံ ${rawImages.length} ပုံထဲမှ ${safeImages.length} ပုံကို Firestore limit အတွင်း သိမ်းပေးလိုက်ပါသည်`, 'info');
             }
 
             try {
@@ -2031,14 +2037,20 @@
                 cancelEditForm();
                 showAdminTab('list');
             } catch (err) {
-                console.error(err);
-                const errMsg = (err && err.message) ? err.message : '';
-                if (/permission|insufficient/i.test(errMsg)) {
+                console.error("Save account error:", err);
+                const code = (err && err.code) ? String(err.code) : '';
+                const errMsg = (err && err.message) ? String(err.message) : '';
+                if (code === 'permission-denied' || /permission-denied|insufficient permissions/i.test(errMsg)) {
                     showToast('Firestore Rules တွင် Authenticated Admin ခွင့်ပြုထားကြောင်း စစ်ဆေးပါ။', 'error');
-                } else if (/exceeds the maximum allowed size|too large|resource-exhausted/i.test(errMsg)) {
+                } else if (code === 'resource-exhausted' || code === 'invalid-argument' || /exceeds the maximum allowed size|too large|resource-exhausted/i.test(errMsg)) {
                     showToast('ပုံများ size ကြီးလွန်းနေပါသည်။ ပုံအရေအတွက် လျှော့ပြီး ထပ်သိမ်းပါ။', 'error');
                 } else {
-                    showToast(`သိမ်းမရပါ: ${errMsg || 'Network / Firestore error'}`, 'error');
+                    showToast(`သိမ်းမရပါ (${code || 'error'}): ${errMsg.slice(0, 80)}`, 'error');
+                }
+            } finally {
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk mr-1"></i> သိမ်းဆည်းမည် (Save Listing)`;
                 }
             }
         };
