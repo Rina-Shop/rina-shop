@@ -274,7 +274,8 @@
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
 
         <!-- ENTRY GATEWAY / SPLASH VIEW -->
-        <section id="entryGateway" class="py-6 sm:py-10 flex items-center justify-center">
+        <section id="entryGateway" class="py-6 sm:py-10 flex flex-col items-center justify-center gap-5">
+            <!-- Card 1: Mobile Legend Accounts -->
             <div class="splash-entry-card w-full max-w-xl rounded-3xl hero-light-border p-6 sm:p-8 text-center space-y-6">
                 <div class="relative w-full h-52 sm:h-64 rounded-2xl overflow-hidden border border-amber-500/40 bg-darkbg shadow-xl">
                     <img id="mlbbSplashImg" src="mlbb-banner.jpg" alt="Mobile Legends Account Banner"
@@ -295,14 +296,32 @@
                     </p>
                 </div>
 
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-1">
+                <div class="flex items-center justify-center pt-1">
                     <button type="button" onclick="enterStorefront()"
                         class="w-full sm:w-auto px-6 py-3.5 rounded-2xl gold-gradient-btn text-black font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer">
                         <span>Mobile Legend အကောင့်များကြည့်ရန်</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
+                </div>
+            </div>
+
+            <!-- Card 2: Separate Box for MLBB Dia Prices -->
+            <div class="w-full max-w-xl rounded-3xl bg-darkcard border border-amber-500/45 p-5 sm:p-6 text-center space-y-4 shadow-xl">
+                <div class="space-y-1">
+                    <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                        <i class="fa-regular fa-gem"></i> MLBB DIAMOND TOP-UP
+                    </span>
+                    <h3 class="text-lg sm:text-xl font-extrabold text-white font-display">
+                        MLBB Diamond ဈေးနှုန်းများ
+                    </h3>
+                    <p class="text-xs text-gray-400">
+                        Weekly Pass နှင့် Diamond Package ဈေးနှုန်းများကို ကြည့်ရှုရန်
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-center">
                     <button type="button" onclick="openDiaPricesView()"
-                        class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-darkinput hover:bg-amber-500/15 text-amber-300 border border-amber-500/50 font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer transition-all">
+                        class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-darkinput hover:bg-amber-500/15 text-amber-300 border border-amber-500/50 font-extrabold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all">
                         <i class="fa-regular fa-gem text-amber-400"></i>
                         <span>Mlbb Dia ဈေးကြည့်ရန်</span>
                     </button>
@@ -319,10 +338,10 @@
                             <i class="fa-regular fa-gem"></i> MLBB DIAMOND TOP-UP LIST
                         </span>
                         <h2 class="text-xl sm:text-2xl font-extrabold hero-vip-float font-display">
-                            MLBB Dia ဈေးနှုန်းစာရင်း
+                            MLBB Dia ဈေးနှုန်းများ
                         </h2>
                         <p class="text-xs sm:text-sm text-gray-400 mt-1">
-                            ဝယ်ယူလိုသော Package / Diamond ပမာဏကို ရွေးချယ်ပြီး Telegram မှ တိုက်ရိုက် ဝယ်ယူနိုင်ပါသည်
+                            ဝယ်ယူလိုသော Package / Diamond ပမာဏကို နှိပ်ပြီး Telegram မှ တိုက်ရိုက် ဝယ်ယူနိုင်ပါသည်
                         </p>
                     </div>
                     <button type="button" onclick="showEntryGateway()"
@@ -333,33 +352,33 @@
                 </div>
             </div>
 
-            <!-- TOP BUNDLES (WEEKLY PASS, WEEKLY ELITE BUNDLE, MONTHLY EPIC BUNDLE) -->
+            <!-- TOP BUNDLES (WEEKLY PASS, WEEKLY ELITE BUNDLE, MONTHLY EPIC BUNDLE - NO BUY TEXT) -->
             <div id="diaBundlesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Dynamically rendered -->
             </div>
 
-            <!-- TWO-COLUMN DIAMOND PRICE CARDS (86-878 LEFT, 963-9288 RIGHT) -->
+            <!-- COMPACT SIDE-BY-SIDE GRID CARDS FOR DIAMOND PACKAGES -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                 <div class="rounded-2xl bg-darkcard border border-amber-500/35 overflow-hidden shadow-xl">
-                    <div class="px-5 py-3.5 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border-b border-darkborder flex items-center justify-between">
+                    <div class="px-4 py-3 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border-b border-darkborder flex items-center justify-between">
                         <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider">
                             <i class="fa-regular fa-gem mr-1.5"></i> Standard Packages (86 - 878)
                         </span>
                         <span class="text-[11px] text-gray-400">MMK (ကျပ်)</span>
                     </div>
-                    <div id="diaLeftList" class="divide-y divide-darkborder/80">
+                    <div id="diaLeftList" class="p-3 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                         <!-- Dynamically rendered -->
                     </div>
                 </div>
 
                 <div class="rounded-2xl bg-darkcard border border-amber-500/35 overflow-hidden shadow-xl">
-                    <div class="px-5 py-3.5 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border-b border-darkborder flex items-center justify-between">
+                    <div class="px-4 py-3 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border-b border-darkborder flex items-center justify-between">
                         <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider">
                             <i class="fa-regular fa-gem mr-1.5"></i> High Packages (963 - 9288)
                         </span>
                         <span class="text-[11px] text-gray-400">MMK (ကျပ်)</span>
                     </div>
-                    <div id="diaRightList" class="divide-y divide-darkborder/80">
+                    <div id="diaRightList" class="p-3 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                         <!-- Dynamically rendered -->
                     </div>
                 </div>
@@ -935,41 +954,36 @@
                 const tgMsg = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ MLBB ${item.label} (ဈေးနှုန်း: ${formatted} Ks) ဝယ်ယူလိုပါသည်။`);
                 return `
                     <a href="https://t.me/lilrina2k2?text=${tgMsg}" target="_blank" rel="noopener noreferrer"
-                        class="group rounded-2xl bg-darkcard border border-amber-500/40 hover:border-amber-400 p-4 flex items-center justify-between gap-3 shadow-lg transition-all">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-300 flex-shrink-0">
-                                <i class="fa-regular fa-gem text-base"></i>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-xs sm:text-sm font-extrabold text-white group-hover:text-amber-300 transition-colors truncate">${item.label}</p>
-                                <p class="text-[11px] text-amber-400 font-bold mt-0.5">${formatted} ks</p>
-                            </div>
+                        class="group rounded-2xl bg-darkcard border border-amber-500/40 hover:border-amber-400 p-4 flex items-center gap-3 shadow-lg transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-300 flex-shrink-0">
+                            <i class="fa-regular fa-gem text-base"></i>
                         </div>
-                        <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 flex-shrink-0">
-                            ဝယ်ယူရန်
-                        </span>
+                        <div class="min-w-0">
+                            <p class="text-xs sm:text-sm font-extrabold text-white group-hover:text-amber-300 transition-colors truncate">${item.label}</p>
+                            <p class="text-xs sm:text-sm text-amber-400 font-extrabold mt-0.5">${formatted} ks</p>
+                        </div>
                     </a>
                 `;
             }).join('');
 
-            const buildRow = (amt) => {
+            const buildBox = (amt) => {
                 const priceVal = Number(diaPrices.diamonds[amt] ?? DEFAULT_DIA_PRICES.diamonds[amt] ?? 0);
                 const formatted = priceVal.toLocaleString();
                 const tgMsg = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ MLBB ${amt} Diamonds (ဈေးနှုန်း: ${formatted} Ks) ဝယ်ယူလိုပါသည်။`);
                 return `
                     <a href="https://t.me/lilrina2k2?text=${tgMsg}" target="_blank" rel="noopener noreferrer"
-                        class="flex items-center justify-between px-4 sm:px-5 py-3 hover:bg-amber-500/10 transition-colors">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-regular fa-gem text-amber-400 text-sm"></i>
-                            <span class="text-sm font-extrabold text-white tracking-wide">${amt}</span>
-                        </div>
-                        <span class="text-sm font-extrabold text-amber-400">${formatted} ks</span>
+                        class="rounded-xl bg-darkbg hover:bg-amber-500/10 border border-darkborder hover:border-amber-500/50 px-3 py-2.5 flex items-center justify-between gap-2 transition-all">
+                        <span class="text-xs sm:text-sm font-extrabold text-white tracking-wide flex items-center gap-1.5">
+                            <i class="fa-regular fa-gem text-amber-400 text-xs"></i>
+                            <span>${amt}</span>
+                        </span>
+                        <span class="text-xs sm:text-sm font-extrabold text-amber-400 whitespace-nowrap">${formatted} ks</span>
                     </a>
                 `;
             };
 
-            leftList.innerHTML = DIA_LEFT_AMOUNTS.map(buildRow).join('');
-            rightList.innerHTML = DIA_RIGHT_AMOUNTS.map(buildRow).join('');
+            leftList.innerHTML = DIA_LEFT_AMOUNTS.map(buildBox).join('');
+            rightList.innerHTML = DIA_RIGHT_AMOUNTS.map(buildBox).join('');
         }
 
         function renderAdminDiaEditor() {
