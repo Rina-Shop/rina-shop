@@ -1070,7 +1070,7 @@
                         let width = img.width;
                         let height = img.height;
 
-                        const maxDim = 800;
+                        const maxDim = 600;
                         if (width > maxDim || height > maxDim) {
                             if (width > height) {
                                 height = Math.round((height * maxDim) / width);
@@ -1086,7 +1086,7 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        resolve(canvas.toDataURL('image/jpeg', 0.78));
+                        resolve(canvas.toDataURL('image/jpeg', 0.62));
                     };
                     img.onerror = () => resolve(event.target.result);
                     img.src = event.target.result;
@@ -1094,6 +1094,18 @@
                 reader.onerror = () => resolve(null);
                 reader.readAsDataURL(file);
             });
+        }
+
+        function fitImagesWithinFirestoreLimit(imgList, maxBytes = 820000) {
+            const result = [];
+            let totalBytes = 0;
+            for (const item of imgList) {
+                const len = typeof item === 'string' ? item.length : 0;
+                if (totalBytes + len > maxBytes) break;
+                result.push(item);
+                totalBytes += len;
+            }
+            return result;
         }
 
         function initFirestoreSync() {
@@ -1989,13 +2001,18 @@
             const description = document.getElementById('accDesc').value.trim();
 
             const highlights = highlightsRaw.split(',').map(s => s.trim()).filter(Boolean);
+            const rawImages = uploadedImagesBase64.length > 0 ? [...uploadedImagesBase64] : ['https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80'];
+            const safeImages = fitImagesWithinFirestoreLimit(rawImages);
+            if (safeImages.length < rawImages.length) {
+                showToast(`Firestore 1MB limit အတွင်း ရှေ့ဆုံး ${safeImages.length} ပုံကို သိမ်းပေးလိုက်ပါသည်`, 'info');
+            }
 
             try {
                 if (editId) {
                     const existing = accounts.find(a => a.id === editId);
                     const payload = {
                         title, rank, price, skins, heroes, winrate, telegram, status, highlights, description,
-                        images: uploadedImagesBase64.length > 0 ? [...uploadedImagesBase64] : (existing ? existing.images : [])
+                        images: uploadedImagesBase64.length > 0 ? safeImages : (existing ? existing.images : [])
                     };
                     await updateDoc(doc(db, "mlbb_accounts", editId), payload);
                     showToast('Account ကို ပြင်ဆင်ပြီးပါပြီ', 'success');
@@ -2004,7 +2021,7 @@
                     const newAcc = {
                         id: newId,
                         title, rank, price, skins, heroes, winrate, telegram, status, highlights, description,
-                        images: uploadedImagesBase64.length > 0 ? [...uploadedImagesBase64] : ['https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80'],
+                        images: safeImages,
                         created: Date.now()
                     };
                     await setDoc(doc(db, "mlbb_accounts", newId), newAcc);
@@ -2015,7 +2032,14 @@
                 showAdminTab('list');
             } catch (err) {
                 console.error(err);
-                showToast('သိမ်းမရပါ။ Firestore Rules တွင် Authenticated Admin ခွင့်ပြုထားကြောင်း စစ်ဆေးပါ။', 'error');
+                const errMsg = (err && err.message) ? err.message : '';
+                if (/permission|insufficient/i.test(errMsg)) {
+                    showToast('Firestore Rules တွင် Authenticated Admin ခွင့်ပြုထားကြောင်း စစ်ဆေးပါ။', 'error');
+                } else if (/exceeds the maximum allowed size|too large|resource-exhausted/i.test(errMsg)) {
+                    showToast('ပုံများ size ကြီးလွန်းနေပါသည်။ ပုံအရေအတွက် လျှော့ပြီး ထပ်သိမ်းပါ။', 'error');
+                } else {
+                    showToast(`သိမ်းမရပါ: ${errMsg || 'Network / Firestore error'}`, 'error');
+                }
             }
         };
 
