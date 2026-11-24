@@ -297,10 +297,71 @@
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-1">
                     <button type="button" onclick="enterStorefront()"
-                        class="w-full sm:w-auto px-7 py-3.5 rounded-2xl gold-gradient-btn text-black font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                        class="w-full sm:w-auto px-6 py-3.5 rounded-2xl gold-gradient-btn text-black font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer">
                         <span>Mobile Legend အကောင့်များကြည့်ရန်</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
+                    <button type="button" onclick="openDiaPricesView()"
+                        class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-darkinput hover:bg-amber-500/15 text-amber-300 border border-amber-500/50 font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer transition-all">
+                        <i class="fa-regular fa-gem text-amber-400"></i>
+                        <span>Mlbb Dia ဈေးကြည့်ရန်</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MLBB DIA PRICES VIEW -->
+        <section id="diaPricesSection" class="hidden space-y-6">
+            <div class="relative rounded-3xl overflow-hidden hero-light-border p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 mb-2">
+                            <i class="fa-regular fa-gem"></i> MLBB DIAMOND TOP-UP LIST
+                        </span>
+                        <h2 class="text-xl sm:text-2xl font-extrabold hero-vip-float font-display">
+                            MLBB Dia ဈေးနှုန်းစာရင်း
+                        </h2>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">
+                            ဝယ်ယူလိုသော Package / Diamond ပမာဏကို ရွေးချယ်ပြီး Telegram မှ တိုက်ရိုက် ဝယ်ယူနိုင်ပါသည်
+                        </p>
+                    </div>
+                    <button type="button" onclick="showEntryGateway()"
+                        class="self-start sm:self-auto px-4 py-2.5 rounded-xl bg-darkinput hover:bg-amber-500/15 text-amber-300 border border-amber-500/40 text-xs font-bold flex items-center gap-2 cursor-pointer transition-all">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>အစစာမျက်နှာသို့</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TOP BUNDLES (WEEKLY PASS, WEEKLY ELITE BUNDLE, MONTHLY EPIC BUNDLE) -->
+            <div id="diaBundlesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Dynamically rendered -->
+            </div>
+
+            <!-- TWO-COLUMN DIAMOND PRICE CARDS (86-878 LEFT, 963-9288 RIGHT) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <div class="rounded-2xl bg-darkcard border border-amber-500/35 overflow-hidden shadow-xl">
+                    <div class="px-5 py-3.5 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border-b border-darkborder flex items-center justify-between">
+                        <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider">
+                            <i class="fa-regular fa-gem mr-1.5"></i> Standard Packages (86 - 878)
+                        </span>
+                        <span class="text-[11px] text-gray-400">MMK (ကျပ်)</span>
+                    </div>
+                    <div id="diaLeftList" class="divide-y divide-darkborder/80">
+                        <!-- Dynamically rendered -->
+                    </div>
+                </div>
+
+                <div class="rounded-2xl bg-darkcard border border-amber-500/35 overflow-hidden shadow-xl">
+                    <div class="px-5 py-3.5 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border-b border-darkborder flex items-center justify-between">
+                        <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider">
+                            <i class="fa-regular fa-gem mr-1.5"></i> High Packages (963 - 9288)
+                        </span>
+                        <span class="text-[11px] text-gray-400">MMK (ကျပ်)</span>
+                    </div>
+                    <div id="diaRightList" class="divide-y divide-darkborder/80">
+                        <!-- Dynamically rendered -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -461,6 +522,9 @@
                         <button onclick="showAdminTab('add')" id="adminTab-add" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
                             <i class="fa-solid fa-plus mr-1.5"></i> Account အသစ်ထည့်မည်
                         </button>
+                        <button onclick="showAdminTab('dia')" id="adminTab-dia" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
+                            <i class="fa-regular fa-gem mr-1.5"></i> Dia ဈေးပြင်ရန်
+                        </button>
                         <button onclick="showAdminTab('settings')" id="adminTab-settings" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
                             <i class="fa-solid fa-gear mr-1.5"></i> Account Info
                         </button>
@@ -597,6 +661,49 @@
                     </form>
                 </div>
 
+                <!-- TAB 2.5: DIA PRICE EDITOR -->
+                <div id="adminSection-dia" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-darkborder pb-3">
+                        <div>
+                            <h4 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+                                <i class="fa-regular fa-gem"></i> Dia ဈေးပြင်ရန် (MLBB Diamond &amp; Pass Prices)
+                            </h4>
+                            <p class="text-xs text-gray-400 mt-0.5">
+                                Item နာမည်/ပမာဏ များကို အသေထားရှိပြီး ဘေးရှိ ဈေးနှုန်းအကွက်များတွင် ကြိုက်သလို ပြင်ဆင်သိမ်းဆည်းနိုင်ပါသည်
+                            </p>
+                        </div>
+                        <button type="button" onclick="handleSaveDiaPrices()"
+                            class="px-5 py-2.5 rounded-xl gold-gradient-btn text-black font-extrabold text-xs shadow-md flex items-center gap-2 self-start sm:self-auto cursor-pointer">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            <span>Dia ဈေးများ သိမ်းမည်</span>
+                        </button>
+                    </div>
+
+                    <form id="diaPriceEditorForm" onsubmit="event.preventDefault(); handleSaveDiaPrices();" class="space-y-6">
+                        <div class="space-y-2.5">
+                            <p class="text-xs font-bold text-amber-300">Pass &amp; Bundles ဈေးနှုန်းများ</p>
+                            <div id="adminDiaBundleInputs" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <!-- Dynamic bundle price inputs -->
+                            </div>
+                        </div>
+
+                        <div class="space-y-2.5">
+                            <p class="text-xs font-bold text-amber-300">Diamond Packages ဈေးနှုန်းများ (86 - 9288)</p>
+                            <div id="adminDiaPackageInputs" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <!-- Dynamic diamond price inputs -->
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex items-center justify-end gap-3 border-t border-darkborder">
+                            <button type="submit"
+                                class="px-6 py-2.5 rounded-xl gold-gradient-btn text-black font-extrabold text-xs shadow-md flex items-center gap-2 cursor-pointer">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Dia ဈေးများ သိမ်းမည်</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
                 <!-- TAB 3: SETTINGS (FIREBASE AUTH INFO) -->
                 <div id="adminSection-settings" class="hidden space-y-4 max-w-lg">
                     <h4 class="text-sm font-bold text-amber-400">Firebase Authentication Status</h4>
@@ -623,6 +730,7 @@
             getFirestore,
             collection,
             doc,
+            getDoc,
             setDoc,
             updateDoc,
             deleteDoc,
@@ -649,6 +757,53 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
         const accountsCol = collection(db, "mlbb_accounts");
+
+        const DIA_BUNDLE_ITEMS = [
+            { key: 'weekly_pass', label: 'Weekly Pass', defaultPrice: 9000 },
+            { key: 'weekly_elite_bundle', label: 'Weekly Elite Bundle', defaultPrice: 5000 },
+            { key: 'monthly_epic_bundle', label: 'Monthly Epic Bundle', defaultPrice: 22100 }
+        ];
+
+        const DIA_LEFT_AMOUNTS = [86, 172, 257, 343, 429, 514, 600, 706, 878];
+        const DIA_RIGHT_AMOUNTS = [963, 1049, 1135, 1220, 1412, 2195, 3688, 5532, 9288];
+
+        const DEFAULT_DIA_PRICES = {
+            bundles: {
+                weekly_pass: 9000,
+                weekly_elite_bundle: 5000,
+                monthly_epic_bundle: 22100
+            },
+            diamonds: {
+                86: 6500,
+                172: 16000,
+                257: 20300,
+                343: 26800,
+                429: 36300,
+                514: 40600,
+                600: 47100,
+                706: 51000,
+                878: 67000,
+                963: 71300,
+                1049: 77800,
+                1135: 87300,
+                1220: 91600,
+                1412: 102000,
+                2195: 151300,
+                3688: 256000,
+                5532: 386000,
+                9288: 631200
+            }
+        };
+
+        function cloneDefaultDiaPrices() {
+            return {
+                bundles: { ...DEFAULT_DIA_PRICES.bundles },
+                diamonds: { ...DEFAULT_DIA_PRICES.diamonds }
+            };
+        }
+
+        let diaPrices = cloneDefaultDiaPrices();
+        const diaPricesDocRef = doc(db, "store_settings", "mlbb_dia_prices");
 
         let accounts = [];
         let activeFilter = 'ALL';
@@ -734,6 +889,7 @@
                     document.getElementById('adminLoginView').classList.add('hidden');
                     document.getElementById('adminDashboardView').classList.remove('hidden');
                     renderAdminTable();
+                    renderAdminDiaEditor();
                 } else {
                     if (adminBtnText) adminBtnText.innerText = "Admin Panel";
                     if (emailDisplay) emailDisplay.innerText = "-";
@@ -743,8 +899,197 @@
             });
         }
 
+        function normalizeDiaPricesData(raw) {
+            const merged = cloneDefaultDiaPrices();
+            if (!raw || typeof raw !== 'object') return merged;
+
+            if (raw.bundles && typeof raw.bundles === 'object') {
+                DIA_BUNDLE_ITEMS.forEach((b) => {
+                    const val = Number(raw.bundles[b.key]);
+                    if (!Number.isNaN(val) && val >= 0) {
+                        merged.bundles[b.key] = val;
+                    }
+                });
+            }
+
+            if (raw.diamonds && typeof raw.diamonds === 'object') {
+                [...DIA_LEFT_AMOUNTS, ...DIA_RIGHT_AMOUNTS].forEach((amt) => {
+                    const val = Number(raw.diamonds[String(amt)] ?? raw.diamonds[amt]);
+                    if (!Number.isNaN(val) && val >= 0) {
+                        merged.diamonds[amt] = val;
+                    }
+                });
+            }
+            return merged;
+        }
+
+        function renderDiaPricesView() {
+            const bundlesGrid = document.getElementById('diaBundlesGrid');
+            const leftList = document.getElementById('diaLeftList');
+            const rightList = document.getElementById('diaRightList');
+            if (!bundlesGrid || !leftList || !rightList) return;
+
+            bundlesGrid.innerHTML = DIA_BUNDLE_ITEMS.map((item) => {
+                const priceVal = Number(diaPrices.bundles[item.key] ?? item.defaultPrice);
+                const formatted = priceVal.toLocaleString();
+                const tgMsg = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ MLBB ${item.label} (ဈေးနှုန်း: ${formatted} Ks) ဝယ်ယူလိုပါသည်။`);
+                return `
+                    <a href="https://t.me/lilrina2k2?text=${tgMsg}" target="_blank" rel="noopener noreferrer"
+                        class="group rounded-2xl bg-darkcard border border-amber-500/40 hover:border-amber-400 p-4 flex items-center justify-between gap-3 shadow-lg transition-all">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-300 flex-shrink-0">
+                                <i class="fa-regular fa-gem text-base"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-xs sm:text-sm font-extrabold text-white group-hover:text-amber-300 transition-colors truncate">${item.label}</p>
+                                <p class="text-[11px] text-amber-400 font-bold mt-0.5">${formatted} ks</p>
+                            </div>
+                        </div>
+                        <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 flex-shrink-0">
+                            ဝယ်ယူရန်
+                        </span>
+                    </a>
+                `;
+            }).join('');
+
+            const buildRow = (amt) => {
+                const priceVal = Number(diaPrices.diamonds[amt] ?? DEFAULT_DIA_PRICES.diamonds[amt] ?? 0);
+                const formatted = priceVal.toLocaleString();
+                const tgMsg = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ MLBB ${amt} Diamonds (ဈေးနှုန်း: ${formatted} Ks) ဝယ်ယူလိုပါသည်။`);
+                return `
+                    <a href="https://t.me/lilrina2k2?text=${tgMsg}" target="_blank" rel="noopener noreferrer"
+                        class="flex items-center justify-between px-4 sm:px-5 py-3 hover:bg-amber-500/10 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-regular fa-gem text-amber-400 text-sm"></i>
+                            <span class="text-sm font-extrabold text-white tracking-wide">${amt}</span>
+                        </div>
+                        <span class="text-sm font-extrabold text-amber-400">${formatted} ks</span>
+                    </a>
+                `;
+            };
+
+            leftList.innerHTML = DIA_LEFT_AMOUNTS.map(buildRow).join('');
+            rightList.innerHTML = DIA_RIGHT_AMOUNTS.map(buildRow).join('');
+        }
+
+        function renderAdminDiaEditor() {
+            const bundleContainer = document.getElementById('adminDiaBundleInputs');
+            const diaContainer = document.getElementById('adminDiaPackageInputs');
+            if (!bundleContainer || !diaContainer) return;
+
+            bundleContainer.innerHTML = DIA_BUNDLE_ITEMS.map((item) => {
+                const val = Number(diaPrices.bundles[item.key] ?? item.defaultPrice);
+                return `
+                    <div class="bg-darkbg border border-darkborder rounded-xl p-3 space-y-1.5">
+                        <label for="diaBundleInput-${item.key}" class="block text-xs font-bold text-gray-200">
+                            ${item.label}
+                        </label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" min="0" step="1" id="diaBundleInput-${item.key}" value="${val}" required
+                                class="w-full bg-darkinput border border-darkborder focus:border-amber-500 rounded-lg px-3 py-2 text-xs font-bold text-amber-300 focus:outline-none">
+                            <span class="text-[11px] font-bold text-gray-400 flex-shrink-0">ks</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const allAmounts = [...DIA_LEFT_AMOUNTS, ...DIA_RIGHT_AMOUNTS];
+            diaContainer.innerHTML = allAmounts.map((amt) => {
+                const val = Number(diaPrices.diamonds[amt] ?? DEFAULT_DIA_PRICES.diamonds[amt] ?? 0);
+                return `
+                    <div class="bg-darkbg border border-darkborder rounded-xl px-3 py-2.5 flex items-center justify-between gap-2.5">
+                        <label for="diaPkgInput-${amt}" class="text-xs font-extrabold text-white flex items-center gap-1.5 flex-shrink-0">
+                            <i class="fa-regular fa-gem text-amber-400"></i>
+                            <span>${amt}</span>
+                        </label>
+                        <div class="flex items-center gap-1.5 flex-1 max-w-[150px]">
+                            <input type="number" min="0" step="1" id="diaPkgInput-${amt}" value="${val}" required
+                                class="w-full bg-darkinput border border-darkborder focus:border-amber-500 rounded-lg px-2.5 py-1.5 text-xs font-bold text-amber-300 text-right focus:outline-none">
+                            <span class="text-[11px] font-bold text-gray-400 flex-shrink-0">ks</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function initDiaPricesSync() {
+            onSnapshot(diaPricesDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    diaPrices = normalizeDiaPricesData(docSnap.data());
+                } else {
+                    diaPrices = cloneDefaultDiaPrices();
+                }
+                renderDiaPricesView();
+                if (currentAdminUser) {
+                    renderAdminDiaEditor();
+                }
+            }, (error) => {
+                console.error("Dia prices listener error:", error);
+                renderDiaPricesView();
+            });
+        }
+
+        window.openDiaPricesView = function() {
+            const gateway = document.getElementById('entryGateway');
+            const storefront = document.getElementById('storefrontContent');
+            const diaSection = document.getElementById('diaPricesSection');
+            if (gateway) gateway.classList.add('hidden');
+            if (storefront) storefront.classList.add('hidden');
+            if (diaSection) diaSection.classList.remove('hidden');
+            renderDiaPricesView();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.handleSaveDiaPrices = async function() {
+            if (!currentAdminUser) {
+                showToast('Admin Login အရင်ဝင်ပါ', 'error');
+                return;
+            }
+
+            const nextBundles = {};
+            for (const item of DIA_BUNDLE_ITEMS) {
+                const el = document.getElementById(`diaBundleInput-${item.key}`);
+                const num = Number(el ? el.value : item.defaultPrice);
+                if (Number.isNaN(num) || num < 0) {
+                    showToast(`${item.label} ဈေးနှုန်း မှန်ကန်စွာ ထည့်ပါ`, 'error');
+                    return;
+                }
+                nextBundles[item.key] = Math.round(num);
+            }
+
+            const nextDiamonds = {};
+            const allAmounts = [...DIA_LEFT_AMOUNTS, ...DIA_RIGHT_AMOUNTS];
+            for (const amt of allAmounts) {
+                const el = document.getElementById(`diaPkgInput-${amt}`);
+                const num = Number(el ? el.value : (DEFAULT_DIA_PRICES.diamonds[amt] ?? 0));
+                if (Number.isNaN(num) || num < 0) {
+                    showToast(`${amt} Dia ဈေးနှုန်း မှန်ကန်စွာ ထည့်ပါ`, 'error');
+                    return;
+                }
+                nextDiamonds[String(amt)] = Math.round(num);
+            }
+
+            const payload = {
+                bundles: nextBundles,
+                diamonds: nextDiamonds,
+                updatedAt: Date.now()
+            };
+
+            try {
+                await setDoc(diaPricesDocRef, payload, { merge: true });
+                diaPrices = normalizeDiaPricesData(payload);
+                renderDiaPricesView();
+                showToast('MLBB Dia ဈေးနှုန်းများ သိမ်းဆည်းပြီးပါပြီ', 'success');
+            } catch (err) {
+                console.error("Save dia prices error:", err);
+                showToast('Dia ဈေးသိမ်းမရပါ။ Firestore Rules စစ်ဆေးပါ။', 'error');
+            }
+        };
+
         window.addEventListener('DOMContentLoaded', () => {
+            renderDiaPricesView();
             initFirestoreSync();
+            initDiaPricesSync();
             initAuthSync();
         });
 
@@ -891,7 +1236,9 @@
         window.enterStorefront = function() {
             const gateway = document.getElementById('entryGateway');
             const storefront = document.getElementById('storefrontContent');
+            const diaSection = document.getElementById('diaPricesSection');
             if (gateway) gateway.classList.add('hidden');
+            if (diaSection) diaSection.classList.add('hidden');
             if (storefront) storefront.classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
@@ -899,7 +1246,9 @@
         window.showEntryGateway = function() {
             const gateway = document.getElementById('entryGateway');
             const storefront = document.getElementById('storefrontContent');
+            const diaSection = document.getElementById('diaPricesSection');
             if (storefront) storefront.classList.add('hidden');
+            if (diaSection) diaSection.classList.add('hidden');
             if (gateway) gateway.classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
@@ -1082,6 +1431,7 @@
                 document.getElementById('adminLoginView').classList.add('hidden');
                 document.getElementById('adminDashboardView').classList.remove('hidden');
                 renderAdminTable();
+                renderAdminDiaEditor();
             } else {
                 document.getElementById('adminLoginView').classList.remove('hidden');
                 document.getElementById('adminDashboardView').classList.add('hidden');
@@ -1146,11 +1496,13 @@
 
             document.getElementById('adminSection-list').classList.add('hidden');
             document.getElementById('adminSection-add').classList.add('hidden');
+            document.getElementById('adminSection-dia').classList.add('hidden');
             document.getElementById('adminSection-settings').classList.add('hidden');
 
             document.getElementById(`adminSection-${tabName}`).classList.remove('hidden');
 
             if (tabName === 'list') renderAdminTable();
+            if (tabName === 'dia') renderAdminDiaEditor();
         };
 
         window.renderAdminTable = function() {
