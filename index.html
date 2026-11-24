@@ -1070,7 +1070,7 @@
                         let width = img.width;
                         let height = img.height;
 
-                        const maxDim = 480;
+                        const maxDim = 360;
                         if (width > maxDim || height > maxDim) {
                             if (width > height) {
                                 height = Math.round((height * maxDim) / width);
@@ -1086,7 +1086,7 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        resolve(canvas.toDataURL('image/jpeg', 0.52));
+                        resolve(canvas.toDataURL('image/jpeg', 0.42));
                     };
                     img.onerror = () => resolve(event.target.result);
                     img.src = event.target.result;
@@ -1096,7 +1096,7 @@
             });
         }
 
-        function fitImagesWithinFirestoreLimit(imgList, maxBytes = 650000) {
+        function fitImagesWithinFirestoreLimit(imgList, maxBytes = 900000) {
             const result = [];
             let totalBytes = 0;
             for (const item of imgList) {
