@@ -140,7 +140,7 @@
             <!-- SEARCH BAR (DESKTOP) -->
             <div class="hidden md:flex flex-1 max-w-md mx-4 relative">
                 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-amber-500/70 text-sm"></i>
-                <input type="text" id="searchInputDesktop" onkeyup="filterAccounts()" placeholder="Account Code, High Rank, Skin ရှာဖွေပါ..." 
+                <input type="text" id="searchInputDesktop" onkeyup="filterAccounts()" placeholder="Account Code, High Rank, Star, Skin ရှာဖွေပါ..." 
                     class="w-full bg-darkinput/90 border border-darkborder focus:border-amber-500 text-sm rounded-full pl-10 pr-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-amber-500 transition-all">
             </div>
 
@@ -164,7 +164,7 @@
         <div class="md:hidden px-4 pb-3">
             <div class="relative w-full">
                 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-amber-500/70 text-sm"></i>
-                <input type="text" id="searchInputMobile" onkeyup="filterAccountsMobile()" placeholder="Account Code, High Rank, Skin ရှာရန်..." 
+                <input type="text" id="searchInputMobile" onkeyup="filterAccountsMobile()" placeholder="Account Code, High Rank, Star, Skin ရှာရန်..." 
                     class="w-full bg-darkinput border border-darkborder focus:border-amber-500 text-sm rounded-full pl-10 pr-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-amber-500">
             </div>
         </div>
@@ -224,8 +224,8 @@
             <div class="w-16 h-16 mx-auto rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500 text-2xl">
                 <i class="fa-solid fa-ghost"></i>
             </div>
-            <h3 class="text-lg font-bold text-gray-200">မတွေ့ရှိပါ (No Accounts Found)</h3>
-            <p class="text-xs text-gray-400">ရှာဖွေသည့် အချက်အလက်နှင့် ကိုက်ညီသော MLBB Account မရှိသေးပါ။</p>
+            <h3 class="text-lg font-bold text-gray-200">Account မရှိသေးပါ (No Accounts)</h3>
+            <p class="text-xs text-gray-400">Admin Panel မှ Account အသစ်တင်ပြီး ကြည့်ရှုနိုင်ပါသည်။</p>
             <button onclick="resetFilters()" class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-400 text-xs font-semibold border border-amber-500/30 hover:bg-amber-500/30 transition-all">
                 မူလအတိုင်း ပြန်ကြည့်မည်
             </button>
@@ -343,7 +343,7 @@
                                 <tr>
                                     <th class="p-3">ပုံ</th>
                                     <th class="p-3">Title / Code</th>
-                                    <th class="p-3">High Rank</th>
+                                    <th class="p-3">High Rank / Star</th>
                                     <th class="p-3">Skins / Heroes</th>
                                     <th class="p-3">ဈေးနှုန်း</th>
                                     <th class="p-3">အခြေအနေ</th>
@@ -369,15 +369,14 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs text-gray-400 mb-1">Account Title / Code *</label>
-                                <input type="text" id="accTitle" required placeholder="ဥပမာ- RINA-9901 High Rank 400+ Skins" 
+                                <input type="text" id="accTitle" required placeholder="ဥပမာ- Rina0001" 
                                     class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
                             </div>
 
                             <div>
-                                <label class="block text-xs text-gray-400 mb-1">High Rank *</label>
-                                <select id="accRank" required class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
-                                    <option value="High Rank">High Rank</option>
-                                </select>
+                                <label class="block text-xs text-gray-400 mb-1">High Rank / Star အရေအတွက် *</label>
+                                <input type="text" id="accRank" required placeholder="ဥပမာ- 120★ သို့မဟုတ် High Rank 85★" 
+                                    class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
                             </div>
 
                             <div>
@@ -491,8 +490,7 @@
             setDoc,
             updateDoc,
             deleteDoc,
-            onSnapshot,
-            getDocs
+            onSnapshot
         } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -508,61 +506,6 @@
         const db = getFirestore(app);
         const accountsCol = collection(db, "mlbb_accounts");
 
-        const DEFAULT_ACCOUNTS = [
-            {
-                id: 'rina-1001',
-                title: 'RINA-1001 | High Rank 120★',
-                rank: 'High Rank',
-                price: 380000,
-                skins: 412,
-                heroes: 124,
-                winrate: '68.2%',
-                telegram: 'lilrina2k2',
-                status: 'AVAILABLE',
-                highlights: ['Gusion Collector', 'Lesley Legend', 'Chou KOF', 'Beatrix Prime', 'Hayabusa Annual Epic'],
-                description: 'Moonton All Unbind Clean Account. Max Emblem Level 60. Collector Skin 6 ခု၊ Legend Skin 2 ခုနှင့် Limited Event Skins များစွာ ပါဝင်ပါသည်။',
-                images: [
-                    'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80',
-                    'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80'
-                ],
-                created: Date.now() - 100000
-            },
-            {
-                id: 'rina-1002',
-                title: 'RINA-1002 | High Rank 65★',
-                rank: 'High Rank',
-                price: 240000,
-                skins: 285,
-                heroes: 118,
-                winrate: '62.4%',
-                telegram: 'lilrina2k2',
-                status: 'AVAILABLE',
-                highlights: ['Ling Collector', 'Granger Legend', 'Guinevere Legend', 'Saber S.A.B.E.R'],
-                description: 'အဆင်သင့် High Rank တက်နိုင်သော Account ဖြစ်ပါသည်။ Moonton Gmail Clean unbind ဖြစ်ပြီး ချက်ချင်းလွှဲပေးပါသည်။',
-                images: [
-                    'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80'
-                ],
-                created: Date.now() - 200000
-            },
-            {
-                id: 'rina-1003',
-                title: 'RINA-1003 | High Rank Heavy Skin',
-                rank: 'High Rank',
-                price: 155000,
-                skins: 195,
-                heroes: 105,
-                winrate: '58.9%',
-                telegram: 'lilrina2k2',
-                status: 'SOLD',
-                highlights: ['Alpha Collector', 'Lancelot Hero', 'Karina KOF'],
-                description: 'ဈေးတန် MLBB VIP Account ဖြစ်ပါသည်။ ရောင်းချပြီးသွားပါပြီ။',
-                images: [
-                    'https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=800&q=80'
-                ],
-                created: Date.now() - 300000
-            }
-        ];
-
         let accounts = [];
         let activeFilter = 'ALL';
         let currentAdminLoggedIn = false;
@@ -576,27 +519,23 @@
             return (raw || 'lilrina2k2').replace(/^@/, '').replace(/^https?:\/\/t\.me\//i, '').trim() || 'lilrina2k2';
         }
 
-        async function initFirestoreSync() {
+        function formatHighRankLabel(rawRank) {
+            const trimmed = (rawRank || '').trim();
+            if (!trimmed) return 'High Rank';
+            if (/high\s*rank/i.test(trimmed)) return trimmed;
+            return `High Rank ${trimmed}`;
+        }
+
+        function initFirestoreSync() {
             if (!localStorage.getItem(STORAGE_KEY_PASS)) {
                 localStorage.setItem(STORAGE_KEY_PASS, 'admin123');
-            }
-
-            try {
-                const snapshot = await getDocs(accountsCol);
-                if (snapshot.empty) {
-                    for (const item of DEFAULT_ACCOUNTS) {
-                        await setDoc(doc(db, "mlbb_accounts", item.id), item);
-                    }
-                }
-            } catch (err) {
-                console.warn("Initial seed check:", err);
             }
 
             onSnapshot(accountsCol, (querySnapshot) => {
                 const list = [];
                 querySnapshot.forEach((docSnap) => {
                     const data = docSnap.data();
-                    list.push({ id: docSnap.id, ...data, rank: 'High Rank' });
+                    list.push({ id: docSnap.id, ...data });
                 });
                 accounts = list;
                 renderAccounts();
@@ -605,7 +544,7 @@
                 }
             }, (error) => {
                 console.error("Firestore listener error:", error);
-                showToast('Firestore ချိတ်ဆက်မှုကို စစ်ဆေးပါ (Database Rules)', 'error');
+                showToast('Firestore Rules ကို စစ်ဆေးပါ (Read/Write ဖွင့်ထားရန်)', 'error');
             });
         }
 
@@ -621,12 +560,13 @@
             const sortVal = document.getElementById('sortSelect').value;
 
             let filtered = accounts.filter(acc => {
+                const rankLabel = formatHighRankLabel(acc.rank);
                 if (activeFilter === 'AVAILABLE_ONLY' && acc.status !== 'AVAILABLE') return false;
-                if (activeFilter === 'High Rank' && acc.rank !== 'High Rank') return false;
+                if (activeFilter === 'High Rank' && !/high\s*rank/i.test(rankLabel)) return false;
 
                 if (searchVal) {
                     const titleMatch = (acc.title || '').toLowerCase().includes(searchVal);
-                    const rankMatch = (acc.rank || '').toLowerCase().includes(searchVal);
+                    const rankMatch = rankLabel.toLowerCase().includes(searchVal);
                     const highlightMatch = (acc.highlights || []).some(h => h.toLowerCase().includes(searchVal));
                     return titleMatch || rankMatch || highlightMatch;
                 }
@@ -656,6 +596,7 @@
                     : 'https://placehold.co/600x350/12141d/f59e0b?text=RINA+SHOP';
 
                 const rankBadgeColor = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+                const rankLabel = formatHighRankLabel(acc.rank);
                 const formattedPrice = Number(acc.price).toLocaleString();
 
                 return `
@@ -672,7 +613,7 @@
 
                             <div class="absolute top-3 right-3 z-10">
                                 <span class="${rankBadgeColor} border text-[11px] font-bold px-2.5 py-1 rounded-lg backdrop-blur-sm">
-                                    High Rank
+                                    ${rankLabel}
                                 </span>
                             </div>
 
@@ -766,10 +707,11 @@
             activeModalImageIndex = 0;
 
             const isSold = acc.status === 'SOLD';
+            const rankLabel = formatHighRankLabel(acc.rank);
             const formattedPrice = Number(acc.price).toLocaleString();
             const telegramUser = cleanTelegramUsername(acc.telegram);
             
-            const tgMessage = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ Account [${acc.title}] (ဈေးနှုန်း: ${formattedPrice} MMK) ကို ဝယ်ယူလိုပါသည်။`);
+            const tgMessage = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ Account [${acc.title}] (${rankLabel}၊ ဈေးနှုန်း: ${formattedPrice} MMK) ကို ဝယ်ယူလိုပါသည်။`);
             const tgLink = `https://t.me/${telegramUser}?text=${tgMessage}`;
 
             const modalBody = document.getElementById('accountModalBody');
@@ -806,7 +748,7 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-darkborder pb-4">
                         <div>
                             <div class="flex items-center gap-2 mb-1">
-                                <span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">High Rank</span>
+                                <span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">${rankLabel}</span>
                                 ${isSold 
                                     ? `<span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-red-600/20 text-red-400 border border-red-500/30">Sold Out</span>`
                                     : `<span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Available</span>`}
@@ -986,6 +928,7 @@
             tbody.innerHTML = accounts.map(acc => {
                 const img = (acc.images && acc.images.length > 0) ? acc.images[0] : 'https://placehold.co/100x60/12141d/f59e0b?text=RINA';
                 const isSold = acc.status === 'SOLD';
+                const rankLabel = formatHighRankLabel(acc.rank);
 
                 return `
                     <tr class="hover:bg-darkcard/50 transition-colors">
@@ -993,7 +936,7 @@
                             <img src="${img}" class="w-12 h-9 object-cover rounded-md border border-darkborder">
                         </td>
                         <td class="p-3 font-semibold text-white max-w-[150px] truncate">${acc.title}</td>
-                        <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[11px] font-bold">High Rank</span></td>
+                        <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[11px] font-bold">${rankLabel}</span></td>
                         <td class="p-3 text-gray-300">${acc.skins} Skins / ${acc.heroes} Heroes</td>
                         <td class="p-3 font-bold text-amber-400">${Number(acc.price).toLocaleString()} Ks</td>
                         <td class="p-3">
@@ -1096,7 +1039,7 @@
 
             const editId = document.getElementById('editAccountId').value;
             const title = document.getElementById('accTitle').value.trim();
-            const rank = 'High Rank';
+            const rank = formatHighRankLabel(document.getElementById('accRank').value);
             const price = parseFloat(document.getElementById('accPrice').value);
             const skins = parseInt(document.getElementById('accSkins').value);
             const heroes = parseInt(document.getElementById('accHeroes').value);
@@ -1133,7 +1076,7 @@
                 showAdminTab('list');
             } catch (err) {
                 console.error(err);
-                showToast('Firestore ထဲ သိမ်းဆည်းရာတွင် အမှားရှိနေပါသည်', 'error');
+                showToast('Firestore Rules ကြောင့် သိမ်းမရပါ။ Rules စစ်ဆေးပါ။', 'error');
             }
         };
 
@@ -1143,7 +1086,7 @@
 
             document.getElementById('editAccountId').value = acc.id;
             document.getElementById('accTitle').value = acc.title;
-            document.getElementById('accRank').value = 'High Rank';
+            document.getElementById('accRank').value = acc.rank || '';
             document.getElementById('accPrice').value = acc.price;
             document.getElementById('accSkins').value = acc.skins;
             document.getElementById('accHeroes').value = acc.heroes;
@@ -1163,7 +1106,7 @@
         window.cancelEditForm = function() {
             document.getElementById('editAccountId').value = '';
             document.getElementById('accTitle').value = '';
-            document.getElementById('accRank').value = 'High Rank';
+            document.getElementById('accRank').value = '';
             document.getElementById('accPrice').value = '';
             document.getElementById('accSkins').value = '';
             document.getElementById('accHeroes').value = '';
@@ -1213,7 +1156,7 @@
                 showToast('Account ကို ဖျက်ပစ်ပြီးပါပြီ', 'info');
             } catch (err) {
                 console.error(err);
-                showToast('ဖျက်ရာတွင် အမှားရှိနေပါသည်', 'error');
+                showToast('Firestore Rules ကြောင့် ဖျက်မရပါ။ Rules စစ်ဆေးပါ။', 'error');
             }
         };
 
