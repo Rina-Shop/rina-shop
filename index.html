@@ -821,7 +821,7 @@
         }
 
         function updateAdminVisibility() {
-            const canSeeAdmin = hasSecretAdminAccess() || Boolean(currentAdminUser);
+            const canSeeAdmin = hasSecretAdminAccess();
             const headerBtn = document.getElementById("headerAdminBtn");
             const footerLink = document.getElementById("footerAdminLink");
             const adminModal = document.getElementById("adminModal");
@@ -1609,7 +1609,7 @@
         };
 
         window.openAdminModal = function() {
-            if (!hasSecretAdminAccess() && !currentAdminUser) {
+            if (!hasSecretAdminAccess()) {
                 return;
             }
             const modal = document.getElementById('adminModal');
