@@ -143,6 +143,67 @@
             animation: heroFloatShimmer 3.2s ease-in-out infinite, goldShineSweep 4.5s linear infinite;
             will-change: transform, filter, background-position;
         }
+
+        @keyframes borderLightOrbit {
+            0% {
+                --border-angle: 0deg;
+            }
+            100% {
+                --border-angle: 360deg;
+            }
+        }
+
+        @property --border-angle {
+            syntax: "<angle>";
+            inherits: true;
+            initial-value: 0deg;
+        }
+
+        .hero-light-border {
+            position: relative;
+            z-index: 1;
+            border: 1.5px solid transparent;
+            background:
+                linear-gradient(90deg, rgba(18, 20, 29, 0.96) 0%, rgba(10, 11, 14, 0.96) 55%, rgba(69, 26, 3, 0.55) 100%) padding-box,
+                conic-gradient(
+                    from var(--border-angle, 0deg),
+                    rgba(245, 158, 11, 0.14) 0deg,
+                    rgba(251, 191, 36, 0.25) 45deg,
+                    rgba(255, 247, 178, 0.95) 85deg,
+                    rgba(251, 191, 36, 0.85) 115deg,
+                    rgba(245, 158, 11, 0.15) 165deg,
+                    rgba(180, 83, 9, 0.12) 260deg,
+                    rgba(255, 242, 163, 0.75) 315deg,
+                    rgba(245, 158, 11, 0.14) 360deg
+                ) border-box;
+            animation: borderLightOrbit 4.5s linear infinite;
+            box-shadow: 0 0 22px rgba(245, 158, 11, 0.14);
+        }
+
+        .hero-light-border::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: conic-gradient(
+                from var(--border-angle, 0deg),
+                transparent 0deg,
+                transparent 65deg,
+                rgba(255, 247, 178, 0.5) 95deg,
+                transparent 130deg,
+                transparent 295deg,
+                rgba(251, 191, 36, 0.35) 320deg,
+                transparent 360deg
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            padding: 2px;
+            filter: blur(5px);
+            pointer-events: none;
+            z-index: -1;
+            animation: borderLightOrbit 4.5s linear infinite;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black">
@@ -200,7 +261,7 @@
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
 
         <!-- HERO BANNER -->
-        <div class="relative rounded-3xl overflow-hidden gold-border-glow p-6 sm:p-8 md:p-10 bg-gradient-to-r from-darkcard via-darkbg to-amber-950/40">
+        <div class="relative rounded-3xl overflow-hidden hero-light-border p-6 sm:p-8 md:p-10">
             <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="relative z-10 max-w-3xl">
                 <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold leading-relaxed hero-vip-float font-display">
