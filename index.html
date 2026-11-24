@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="my" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RINA SHOP 24/7 - MLBB VIP Account Center</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Pyidaungsu & Inter & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Padauk:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            glow: '#ffd700',
+                            accent: '#e6c666'
+                        },
+                        darkbg: '#0a0b0e',
+                        darkcard: '#12141d',
+                        darkborder: '#232736',
+                        darkinput: '#1a1d2b'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Padauk', 'sans-serif'],
+                        display: ['Montserrat', 'Padauk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #08090c;
+            color: #e2e8f0;
+            font-family: 'Plus Jakarta Sans', 'Padauk', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Gold Gradient Effects */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fff2a3 0%, #f59e0b 50%, #b45309 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 60%, #78350f 100%);
+        }
+
+        .gold-gradient-btn {
+            background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 50%, #d97706 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .gold-gradient-btn:hover {
+            background: linear-gradient(135deg, #ffe082 0%, #fbbf24 50%, #b45309 100%);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .gold-border-glow {
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.1);
+        }
+        .gold-border-glow:hover {
+            border-color: rgba(251, 191, 36, 0.7);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.25);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0f17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d97706;
+            border-radius: 4px;
+        }
+
+        .glass-panel {
+            background: rgba(18, 20, 29, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Coin Emblem Animation */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(251, 191, 36, 0.8); }
+        }
+
+        .coin-glow {
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-amber-500/20 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            
+            <!-- BRAND LOGO WITH SVG EMBLEM -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="resetFilters()">
+                <div class="relative w-12 h-12 rounded-full gold-gradient-bg p-[2px] coin-glow flex-shrink-0">
+                    <div class="w-full h-full rounded-full bg-gradient-to-b from-yellow-300 via-amber-500 to-amber-700 flex flex-col items-center justify-center text-black border border-amber-200/50 shadow-inner">
+                        <div class="relative flex flex-col items-center">
+                            <i class="fa-solid font-bold fa-crown text-[10px] text-black"></i>
+                            <i class="fa-solid fa-gem text-xs text-amber-950 font-black"></i>
+                            <span class="text-[9px] font-extrabold tracking-tighter leading-tight text-amber-950 mt-[-2px]">RINA</span>
+                            <span class="text-[7px] font-black tracking-widest text-black">24/7</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-wider gold-gradient-text flex items-center gap-1.5 font-display">
+                        RINA SHOP <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/40">24/7</span>
+                    </h1>
+                    <p class="text-[11px] text-gray-400 font-medium">MLBB VIP Account Marketplace</p>
+                </div>
+            </div>
+
+            <!-- SEARCH BAR (DESKTOP) -->
+            <div class="hidden md:flex flex-1 max-w-md mx-4 relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-amber-500/70 text-sm"></i>
+                <input type="text" id="searchInputDesktop" onkeyup="filterAccounts()" placeholder="Account Code, High Rank, Skin ရှာဖွေပါ..." 
+                    class="w-full bg-darkinput/90 border border-darkborder focus:border-amber-500 text-sm rounded-full pl-10 pr-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-amber-500 transition-all">
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="flex items-center gap-2.5">
+                <a href="https://t.me/rina_shop247" target="_blank" rel="noopener noreferrer" 
+                    class="hidden sm:flex items-center gap-2 bg-sky-600/20 hover:bg-sky-600/30 text-sky-400 border border-sky-500/30 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all">
+                    <i class="fa-brands fa-telegram text-base text-sky-400"></i>
+                    <span>Telegram Contact</span>
+                </a>
+
+                <button onclick="openAdminModal()" 
+                    class="flex items-center gap-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all">
+                    <i class="fa-solid fa-user-shield text-sm"></i>
+                    <span id="adminBtnText">Admin Panel</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- SEARCH BAR (MOBILE) -->
+        <div class="md:hidden px-4 pb-3">
+            <div class="relative w-full">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-amber-500/70 text-sm"></i>
+                <input type="text" id="searchInputMobile" onkeyup="filterAccountsMobile()" placeholder="Account Code, High Rank, Skin ရှာရန်..." 
+                    class="w-full bg-darkinput border border-darkborder focus:border-amber-500 text-sm rounded-full pl-10 pr-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-amber-500">
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+
+        <!-- HERO BANNER -->
+        <div class="relative rounded-3xl overflow-hidden gold-border-glow p-6 sm:p-8 md:p-10 bg-gradient-to-r from-darkcard via-darkbg to-amber-950/40">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 max-w-3xl">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold leading-relaxed gold-gradient-text font-display">
+                    Rina ရောင်းချပေးသောအကောင့်များကို စိတ်ချယုံကြည်စွာ ဝယ်ယူနိုင်ပါသည်
+                </h2>
+            </div>
+        </div>
+
+        <!-- FILTER & SORT CONTROLS -->
+        <section class="space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                
+                <!-- High Rank Category Tabs -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none text-xs font-semibold">
+                    <button onclick="setFilter('ALL')" id="tab-ALL" class="filter-btn px-4 py-2.5 rounded-xl bg-amber-500 text-black font-bold border border-amber-400 shadow-md transition-all whitespace-nowrap">
+                        <i class="fa-solid fa-layer-group mr-1.5"></i> အားလုံး (All)
+                    </button>
+                    <button onclick="setFilter('High Rank')" id="tab-HighRank" class="filter-btn px-4 py-2.5 rounded-xl bg-darkcard text-gray-300 hover:text-white border border-darkborder hover:border-amber-500/50 transition-all whitespace-nowrap">
+                        <i class="fa-solid fa-crown text-amber-400 mr-1.5"></i> High Rank
+                    </button>
+                    <button onclick="setFilter('AVAILABLE_ONLY')" id="tab-Available" class="filter-btn px-4 py-2.5 rounded-xl bg-darkcard text-gray-300 hover:text-emerald-400 border border-darkborder hover:border-emerald-500/50 transition-all whitespace-nowrap">
+                        <i class="fa-solid fa-circle-check text-emerald-500 mr-1.5"></i> ဝယ်ယူနိုင်သည်များ (Available)
+                    </button>
+                </div>
+
+                <!-- Sort Selector -->
+                <div class="flex items-center gap-2 text-xs self-end md:self-auto">
+                    <span class="text-gray-400">စီမည်:</span>
+                    <select id="sortSelect" onchange="filterAccounts()" class="bg-darkcard border border-darkborder text-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+                        <option value="newest">အသစ်ဆုံး (Newest First)</option>
+                        <option value="price-low">ဈေးနှုန်း: နည်းမှ အများ</option>
+                        <option value="price-high">ဈေးနှုန်း: အများမှ နည်း</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACCOUNT CARDS GRID -->
+        <section id="accountGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="col-span-full text-center py-12 text-gray-400 text-xs">
+                <i class="fa-solid fa-spinner fa-spin text-amber-400 text-lg mr-2"></i> Accounts စာရင်း ရယူနေပါသည်...
+            </div>
+        </section>
+
+        <!-- EMPTY STATE -->
+        <div id="emptyState" class="hidden text-center py-16 space-y-3 bg-darkcard/50 rounded-3xl border border-darkborder">
+            <div class="w-16 h-16 mx-auto rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500 text-2xl">
+                <i class="fa-solid fa-ghost"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-200">မတွေ့ရှိပါ (No Accounts Found)</h3>
+            <p class="text-xs text-gray-400">ရှာဖွေသည့် အချက်အလက်နှင့် ကိုက်ညီသော MLBB Account မရှိသေးပါ။</p>
+            <button onclick="resetFilters()" class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-400 text-xs font-semibold border border-amber-500/30 hover:bg-amber-500/30 transition-all">
+                မူလအတိုင်း ပြန်ကြည့်မည်
+            </button>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-16 bg-darkcard border-t border-darkborder text-gray-400 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full gold-gradient-bg p-[1.5px] flex-shrink-0">
+                        <div class="w-full h-full rounded-full bg-amber-500 flex items-center justify-center text-black font-extrabold text-xs">
+                            RINA
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white gold-gradient-text">RINA SHOP 24/7</h4>
+                        <p class="text-xs text-gray-400">Most Trusted Mobile Legends Account Store in Myanmar</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6 text-sm">
+                    <a href="https://t.me/rina_shop247" target="_blank" class="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                        <i class="fa-brands fa-telegram text-sky-400"></i> Telegram VIP
+                    </a>
+                    <a href="javascript:void(0)" onclick="openAdminModal()" class="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-lock text-amber-400"></i> Admin Panel
+                    </a>
+                </div>
+            </div>
+            <hr class="border-darkborder">
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-2">
+                <p>&copy; 2026 RINA SHOP 24/7. All rights reserved.</p>
+                <p class="flex items-center gap-1">Designed for MLBB Gamers <i class="fa-solid fa-heart text-amber-500"></i></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ACCOUNT DETAILS MODAL -->
+    <div id="accountModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+        <div class="relative w-full max-w-3xl bg-darkcard border border-amber-500/40 rounded-3xl overflow-hidden shadow-2xl my-8">
+            <button onclick="closeModal('accountModal')" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-amber-500 hover:text-black text-white flex items-center justify-center transition-all border border-amber-500/30">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="accountModalBody" class="p-6 sm:p-8 space-y-6">
+                <!-- Modal content dynamically injected -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN AUTH & DASHBOARD MODAL -->
+    <div id="adminModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+        <div class="relative w-full max-w-4xl bg-darkcard border border-amber-500/50 rounded-3xl overflow-hidden shadow-2xl my-8">
+            <div class="flex items-center justify-between px-6 py-4 bg-darkbg border-b border-darkborder">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-amber-500 text-lg"></i>
+                    <h3 class="text-base font-bold text-white">RINA SHOP Admin Management</h3>
+                </div>
+                <button onclick="closeModal('adminModal')" class="text-gray-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- LOGIN VIEW -->
+            <div id="adminLoginView" class="p-8 max-w-md mx-auto space-y-6 text-center">
+                <div class="w-16 h-16 mx-auto rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-white">Admin Panel သို့ဝင်ရောက်ရန်</h4>
+                    <p class="text-xs text-gray-400 mt-1">မူလ Password: <span class="text-amber-400 font-mono font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">admin123</span></p>
+                </div>
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div class="relative">
+                        <i class="fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="password" id="adminPasswordInput" required placeholder="Admin Password ထည့်ပါ..." 
+                            class="w-full bg-darkinput border border-darkborder focus:border-amber-500 text-sm rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-amber-500">
+                    </div>
+                    <button type="submit" class="w-full py-3 rounded-xl gold-gradient-btn text-black font-extrabold text-sm shadow-lg">
+                        Login ဝင်မည် <i class="fa-solid fa-arrow-right-to-bracket ml-1.5"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- DASHBOARD VIEW (AFTER AUTH) -->
+            <div id="adminDashboardView" class="hidden p-6 space-y-6">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-darkborder pb-4">
+                    <div class="flex items-center gap-2">
+                        <button onclick="showAdminTab('list')" id="adminTab-list" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 text-black">
+                            <i class="fa-solid fa-list mr-1.5"></i> Accounts စာရင်း
+                        </button>
+                        <button onclick="showAdminTab('add')" id="adminTab-add" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
+                            <i class="fa-solid fa-plus mr-1.5"></i> Account အသစ်ထည့်မည်
+                        </button>
+                        <button onclick="showAdminTab('settings')" id="adminTab-settings" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
+                            <i class="fa-solid fa-gear mr-1.5"></i> Password ပြောင်းမည်
+                        </button>
+                    </div>
+                    <button onclick="handleAdminLogout()" class="px-3 py-1.5 text-xs text-red-400 hover:bg-red-500/10 rounded-lg border border-red-500/30 transition-all">
+                        <i class="fa-solid fa-power-off mr-1"></i> Logout
+                    </button>
+                </div>
+
+                <!-- TAB 1: ACCOUNTS MANAGEMENT TABLE -->
+                <div id="adminSection-list" class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-sm font-bold text-gray-200">တင်ထားသော MLBB Account များ (စုစုပေါင်း: <span id="adminTotalCount">0</span>)</h4>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-2xl border border-darkborder bg-darkbg">
+                        <table class="w-full text-left text-xs text-gray-300">
+                            <thead class="bg-darkcard text-amber-400 uppercase tracking-wider font-semibold border-b border-darkborder">
+                                <tr>
+                                    <th class="p-3">ပုံ</th>
+                                    <th class="p-3">Title / Code</th>
+                                    <th class="p-3">High Rank</th>
+                                    <th class="p-3">Skins / Heroes</th>
+                                    <th class="p-3">ဈေးနှုန်း</th>
+                                    <th class="p-3">အခြေအနေ</th>
+                                    <th class="p-3 text-right">လုပ်ဆောင်ချက်</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminAccountTable" class="divide-y divide-darkborder">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 2: ADD / EDIT ACCOUNT FORM -->
+                <div id="adminSection-add" class="hidden space-y-6">
+                    <h4 id="formHeaderTitle" class="text-sm font-bold text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-square-plus"></i> MLBB Account အသစ်တင်မည်
+                    </h4>
+
+                    <form onsubmit="handleSaveAccount(event)" class="space-y-4">
+                        <input type="hidden" id="editAccountId">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Account Title / Code *</label>
+                                <input type="text" id="accTitle" required placeholder="ဥပမာ- RINA-9901 High Rank 400+ Skins" 
+                                    class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">High Rank *</label>
+                                <select id="accRank" required class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
+                                    <option value="High Rank">High Rank</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">ဈေးနှုန်း (MMK/ကျပ်) *</label>
+                                <input type="number" id="accPrice" required placeholder="ဥပမာ- 180000" 
+                                    class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Skins အရေအတွက် *</label>
+                                <input type="number" id="accSkins" required placeholder="ဥပမာ- 285" 
+                                    class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Heroes အရေအတွက် *</label>
+                                <input type="number" id="accHeroes" required placeholder="ဥပမာ- 120" 
+                                    class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Win Rate (%)</label>
+                                <input type="text" id="accWinrate" placeholder="ဥပမာ- 65.4%" 
+                                    class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Telegram Contact Link/Username</label>
+                                <input type="text" id="accTelegram" placeholder="rina_shop247" 
+                                    class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">အခြေအနေ (Status)</label>
+                                <select id="accStatus" class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
+                                    <option value="AVAILABLE">ဝယ်ယူနိုင်သည် (Available)</option>
+                                    <option value="SOLD">ရောင်းပြီး (Sold Out)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Rare Skins / Highlights (ကော်မာဖြင့်ခြားပါ)</label>
+                            <input type="text" id="accHighlights" placeholder="ဥပမာ- Gusion Collector, Lesley Legend, Chou KOF, Beatrix Prime" 
+                                class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Account အကြောင်း အသေးစိတ်ဖော်ပြချက်</label>
+                            <textarea id="accDesc" rows="3" placeholder="Moonton All Unbind/ Clean Account, Emblem Max 6, Epic 15 ခုပါ..." 
+                                class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none"></textarea>
+                        </div>
+
+                        <!-- IMAGE UPLOADER -->
+                        <div class="space-y-2 border-t border-darkborder pt-3">
+                            <label class="block text-xs font-bold text-amber-400">Account ဓာတ်ပုံများ တင်ရန် (Image Upload)</label>
+                            <div class="flex items-center gap-4">
+                                <label class="cursor-pointer bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+                                    <i class="fa-solid fa-cloud-arrow-up text-sm"></i>
+                                    <span>ပုံရွေးချယ်ပါ (Select Photos)</span>
+                                    <input type="file" id="imageInput" accept="image/*" multiple onchange="handleImageUpload(event)" class="hidden">
+                                </label>
+                                <span class="text-[11px] text-gray-400">ဖုန်း/ကွန်ပျူတာထဲမှ တိုက်ရိုက်ပုံတင်နိုင်ပါသည်။</span>
+                            </div>
+
+                            <div id="imagePreviewContainer" class="flex flex-wrap gap-3 mt-3 min-h-[60px] p-2 bg-darkbg border border-darkborder rounded-xl">
+                                <p id="noImageHint" class="text-xs text-gray-500 self-center mx-auto">ပုံမရွေးရသေးပါ</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 pt-4">
+                            <button type="submit" class="px-6 py-2.5 rounded-xl gold-gradient-btn text-black font-extrabold text-xs">
+                                <i class="fa-solid fa-floppy-disk mr-1"></i> သိမ်းဆည်းမည် (Save Listing)
+                            </button>
+                            <button type="button" onclick="cancelEditForm()" class="px-4 py-2.5 rounded-xl bg-gray-800 text-gray-300 text-xs hover:bg-gray-700">
+                                မလုပ်တော့ပါ
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- TAB 3: SETTINGS (CHANGE ADMIN PASSWORD) -->
+                <div id="adminSection-settings" class="hidden space-y-4 max-w-md">
+                    <h4 class="text-sm font-bold text-amber-400">Admin Password ပြောင်းလဲရန်</h4>
+                    <form onsubmit="handleChangePassword(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Password အသစ်</label>
+                            <input type="password" id="newAdminPassword" required minlength="4" placeholder="Password အသစ်ထည့်ပါ..." 
+                                class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
+                        </div>
+                        <button type="submit" class="px-5 py-2.5 rounded-xl gold-gradient-btn text-black font-bold text-xs">
+                            Password ပြောင်းမည်
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- FIREBASE SDK (MODULE) & APP LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+        import {
+            getFirestore,
+            collection,
+            doc,
+            setDoc,
+            updateDoc,
+            deleteDoc,
+            onSnapshot,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDePxezfrnwtr52eorLKtY9cqF27EIX1YA",
+            authDomain: "rina-game-shop.firebaseapp.com",
+            projectId: "rina-game-shop",
+            storageBucket: "rina-game-shop.appspot.com",
+            messagingSenderId: "000000000000",
+            appId: "1:000000000000:web:rina-game-shop"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const accountsCol = collection(db, "mlbb_accounts");
+
+        const DEFAULT_ACCOUNTS = [
+            {
+                id: 'rina-1001',
+                title: 'RINA-1001 | High Rank 120★',
+                rank: 'High Rank',
+                price: 380000,
+                skins: 412,
+                heroes: 124,
+                winrate: '68.2%',
+                telegram: 'rina_shop247',
+                status: 'AVAILABLE',
+                highlights: ['Gusion Collector', 'Lesley Legend', 'Chou KOF', 'Beatrix Prime', 'Hayabusa Annual Epic'],
+                description: 'Moonton All Unbind Clean Account. Max Emblem Level 60. Collector Skin 6 ခု၊ Legend Skin 2 ခုနှင့် Limited Event Skins များစွာ ပါဝင်ပါသည်။',
+                images: [
+                    'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80'
+                ],
+                created: Date.now() - 100000
+            },
+            {
+                id: 'rina-1002',
+                title: 'RINA-1002 | High Rank 65★',
+                rank: 'High Rank',
+                price: 240000,
+                skins: 285,
+                heroes: 118,
+                winrate: '62.4%',
+                telegram: 'rina_shop247',
+                status: 'AVAILABLE',
+                highlights: ['Ling Collector', 'Granger Legend', 'Guinevere Legend', 'Saber S.A.B.E.R'],
+                description: 'အဆင်သင့် High Rank တက်နိုင်သော Account ဖြစ်ပါသည်။ Moonton Gmail Clean unbind ဖြစ်ပြီး ချက်ချင်းလွှဲပေးပါသည်။',
+                images: [
+                    'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80'
+                ],
+                created: Date.now() - 200000
+            },
+            {
+                id: 'rina-1003',
+                title: 'RINA-1003 | High Rank Heavy Skin',
+                rank: 'High Rank',
+                price: 155000,
+                skins: 195,
+                heroes: 105,
+                winrate: '58.9%',
+                telegram: 'rina_shop247',
+                status: 'SOLD',
+                highlights: ['Alpha Collector', 'Lancelot Hero', 'Karina KOF'],
+                description: 'ဈေးတန် MLBB VIP Account ဖြစ်ပါသည်။ ရောင်းချပြီးသွားပါပြီ။',
+                images: [
+                    'https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=800&q=80'
+                ],
+                created: Date.now() - 300000
+            }
+        ];
+
+        let accounts = [];
+        let activeFilter = 'ALL';
+        let currentAdminLoggedIn = false;
+        let uploadedImagesBase64 = [];
+        let currentModalImages = [];
+        let activeModalImageIndex = 0;
+
+        const STORAGE_KEY_PASS = 'rina_admin_password_v1';
+
+        async function initFirestoreSync() {
+            if (!localStorage.getItem(STORAGE_KEY_PASS)) {
+                localStorage.setItem(STORAGE_KEY_PASS, 'admin123');
+            }
+
+            try {
+                const snapshot = await getDocs(accountsCol);
+                if (snapshot.empty) {
+                    for (const item of DEFAULT_ACCOUNTS) {
+                        await setDoc(doc(db, "mlbb_accounts", item.id), item);
+                    }
+                }
+            } catch (err) {
+                console.warn("Initial seed check:", err);
+            }
+
+            onSnapshot(accountsCol, (querySnapshot) => {
+                const list = [];
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    list.push({ id: docSnap.id, ...data, rank: 'High Rank' });
+                });
+                accounts = list;
+                renderAccounts();
+                if (currentAdminLoggedIn) {
+                    renderAdminTable();
+                }
+            }, (error) => {
+                console.error("Firestore listener error:", error);
+                showToast('Firestore ချိတ်ဆက်မှုကို စစ်ဆေးပါ (Database Rules)', 'error');
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initFirestoreSync();
+        });
+
+        window.renderAccounts = function() {
+            const grid = document.getElementById('accountGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            const searchVal = (document.getElementById('searchInputDesktop').value || document.getElementById('searchInputMobile').value || '').toLowerCase().trim();
+            const sortVal = document.getElementById('sortSelect').value;
+
+            let filtered = accounts.filter(acc => {
+                if (activeFilter === 'AVAILABLE_ONLY' && acc.status !== 'AVAILABLE') return false;
+                if (activeFilter === 'High Rank' && acc.rank !== 'High Rank') return false;
+
+                if (searchVal) {
+                    const titleMatch = (acc.title || '').toLowerCase().includes(searchVal);
+                    const rankMatch = (acc.rank || '').toLowerCase().includes(searchVal);
+                    const highlightMatch = (acc.highlights || []).some(h => h.toLowerCase().includes(searchVal));
+                    return titleMatch || rankMatch || highlightMatch;
+                }
+                return true;
+            });
+
+            if (sortVal === 'price-low') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortVal === 'price-high') {
+                filtered.sort((a, b) => b.price - a.price);
+            } else {
+                filtered.sort((a, b) => (b.created || 0) - (a.created || 0));
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            grid.innerHTML = filtered.map(acc => {
+                const isSold = acc.status === 'SOLD';
+                const mainImg = (acc.images && acc.images.length > 0) 
+                    ? acc.images[0] 
+                    : 'https://placehold.co/600x350/12141d/f59e0b?text=RINA+SHOP';
+
+                const rankBadgeColor = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+                const formattedPrice = Number(acc.price).toLocaleString();
+
+                return `
+                    <div class="group bg-darkcard border border-darkborder hover:border-amber-500/50 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-amber-500/10 flex flex-col">
+                        <div class="relative h-48 sm:h-52 bg-darkbg overflow-hidden cursor-pointer" onclick="openAccountDetails('${acc.id}')">
+                            <img src="${mainImg}" alt="${acc.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            
+                            <div class="absolute top-3 left-3 z-10 flex gap-2">
+                                ${isSold 
+                                    ? `<span class="bg-red-600/90 text-white text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider backdrop-blur-sm"><i class="fa-solid fa-ban mr-1"></i> Sold Out</span>`
+                                    : `<span class="bg-emerald-500/90 text-black text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider backdrop-blur-sm"><i class="fa-solid fa-check mr-1"></i> Available</span>`
+                                }
+                            </div>
+
+                            <div class="absolute top-3 right-3 z-10">
+                                <span class="${rankBadgeColor} border text-[11px] font-bold px-2.5 py-1 rounded-lg backdrop-blur-sm">
+                                    High Rank
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-3 right-3 z-10 bg-black/70 text-gray-300 text-[10px] font-semibold px-2 py-0.5 rounded-md backdrop-blur-sm flex items-center gap-1">
+                                <i class="fa-solid fa-image"></i> ${acc.images ? acc.images.length : 1}
+                            </div>
+                        </div>
+
+                        <div class="p-4 sm:p-5 flex-grow flex flex-col justify-between space-y-4">
+                            <div class="space-y-2">
+                                <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-1 cursor-pointer" onclick="openAccountDetails('${acc.id}')">
+                                    ${acc.title}
+                                </h3>
+
+                                <div class="grid grid-cols-3 gap-1 bg-darkbg p-2 rounded-xl text-center text-xs border border-darkborder">
+                                    <div>
+                                        <p class="text-[10px] text-gray-400 uppercase">Skins</p>
+                                        <p class="font-extrabold text-amber-400">${acc.skins}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] text-gray-400 uppercase">Heroes</p>
+                                        <p class="font-extrabold text-gray-200">${acc.heroes}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] text-gray-400 uppercase">Win Rate</p>
+                                        <p class="font-extrabold text-emerald-400">${acc.winrate || 'N/A'}</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-wrap gap-1.5 pt-1">
+                                    ${(acc.highlights || []).slice(0, 3).map(hl => `
+                                        <span class="bg-amber-500/10 text-amber-300 text-[10px] px-2 py-0.5 rounded-md border border-amber-500/20 font-medium">
+                                            <i class="fa-solid fa-gem text-[9px] mr-1 text-amber-400"></i>${hl}
+                                        </span>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <div class="pt-3 border-t border-darkborder flex items-center justify-between gap-2">
+                                <div>
+                                    <p class="text-[10px] text-gray-400 uppercase font-medium">ဈေးနှုန်း (Price)</p>
+                                    <p class="text-base sm:text-lg font-black text-amber-400 gold-gradient-text">${formattedPrice} <span class="text-xs font-bold text-amber-500">MMK</span></p>
+                                </div>
+
+                                <button onclick="openAccountDetails('${acc.id}')" 
+                                    class="px-3.5 py-2 rounded-xl ${isSold ? 'bg-gray-800 text-gray-400 cursor-not-allowed' : 'gold-gradient-btn text-black font-extrabold'} text-xs shadow-md transition-all flex items-center gap-1.5">
+                                    <span>${isSold ? 'အသေးစိတ်' : 'ဝယ်ယူရန်'}</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        };
+
+        window.setFilter = function(filterType) {
+            activeFilter = filterType;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.className = 'filter-btn px-4 py-2.5 rounded-xl bg-darkcard text-gray-300 hover:text-white border border-darkborder hover:border-amber-500/50 transition-all whitespace-nowrap';
+            });
+
+            let activeBtnId = 'tab-ALL';
+            if (filterType === 'High Rank') activeBtnId = 'tab-HighRank';
+            if (filterType === 'AVAILABLE_ONLY') activeBtnId = 'tab-Available';
+
+            const activeBtn = document.getElementById(activeBtnId);
+            if (activeBtn) {
+                activeBtn.className = 'filter-btn px-4 py-2.5 rounded-xl bg-amber-500 text-black font-bold border border-amber-400 shadow-md transition-all whitespace-nowrap';
+            }
+
+            renderAccounts();
+        };
+
+        window.filterAccounts = function() { renderAccounts(); };
+        window.filterAccountsMobile = function() { renderAccounts(); };
+
+        window.resetFilters = function() {
+            document.getElementById('searchInputDesktop').value = '';
+            document.getElementById('searchInputMobile').value = '';
+            document.getElementById('sortSelect').value = 'newest';
+            setFilter('ALL');
+        };
+
+        window.openAccountDetails = function(id) {
+            const acc = accounts.find(a => a.id === id);
+            if (!acc) return;
+
+            currentModalImages = acc.images && acc.images.length > 0 ? acc.images : ['https://placehold.co/600x350/12141d/f59e0b?text=RINA+SHOP'];
+            activeModalImageIndex = 0;
+
+            const isSold = acc.status === 'SOLD';
+            const formattedPrice = Number(acc.price).toLocaleString();
+            const telegramUser = acc.telegram || 'rina_shop247';
+            
+            const tgMessage = encodeURIComponent(`မင်္ဂလာပါ RINA SHOP, Account Code [${acc.title}] (ဈေးနှုန်း: ${formattedPrice} MMK) ကို ဝယ်ယူလိုပါသည်။`);
+            const tgLink = `https://t.me/${telegramUser}?text=${tgMessage}`;
+
+            const modalBody = document.getElementById('accountModalBody');
+            modalBody.innerHTML = `
+                <div class="space-y-3">
+                    <div class="relative h-64 sm:h-80 w-full bg-black rounded-2xl overflow-hidden border border-darkborder">
+                        <img id="mainModalImg" src="${currentModalImages[0]}" class="w-full h-full object-contain">
+                        
+                        ${currentModalImages.length > 1 ? `
+                            <button onclick="prevModalImg()" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 text-amber-400 hover:bg-amber-500 hover:text-black flex items-center justify-center transition-all">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button onclick="nextModalImg()" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 text-amber-400 hover:bg-amber-500 hover:text-black flex items-center justify-center transition-all">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        ` : ''}
+
+                        <div class="absolute bottom-3 left-3 bg-black/70 text-gray-300 text-xs px-2.5 py-1 rounded-lg border border-white/10">
+                            <span id="imgCounter">1</span> / ${currentModalImages.length} ဓာတ်ပုံ
+                        </div>
+                    </div>
+
+                    ${currentModalImages.length > 1 ? `
+                        <div class="flex items-center gap-2 overflow-x-auto pb-1">
+                            ${currentModalImages.map((img, idx) => `
+                                <img src="${img}" onclick="setModalImg(${idx})" id="thumb-${idx}" 
+                                    class="w-16 h-12 object-cover rounded-lg border-2 cursor-pointer transition-all ${idx === 0 ? 'border-amber-500 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}">
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-darkborder pb-4">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">High Rank</span>
+                                ${isSold 
+                                    ? `<span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-red-600/20 text-red-400 border border-red-500/30">Sold Out</span>`
+                                    : `<span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Available</span>`}
+                            </div>
+                            <h2 class="text-lg sm:text-xl font-bold text-white">${acc.title}</h2>
+                        </div>
+                        <div class="text-left sm:text-right">
+                            <p class="text-xs text-gray-400">ဝယ်ယူမည့် ဈေးနှုန်း</p>
+                            <p class="text-xl sm:text-2xl font-black text-amber-400 gold-gradient-text">${formattedPrice} <span class="text-xs font-bold text-amber-500">MMK</span></p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-darkbg p-3.5 rounded-2xl border border-darkborder text-xs">
+                        <div class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-shirt text-amber-400 text-lg"></i>
+                            <div>
+                                <p class="text-[10px] text-gray-400">Skins အရေအတွက်</p>
+                                <p class="font-bold text-white">${acc.skins} Skins</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-users text-amber-400 text-lg"></i>
+                            <div>
+                                <p class="text-[10px] text-gray-400">Heroes အရေအတွက်</p>
+                                <p class="font-bold text-white">${acc.heroes} Heroes</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-chart-line text-emerald-400 text-lg"></i>
+                            <div>
+                                <p class="text-[10px] text-gray-400">Win Rate</p>
+                                <p class="font-bold text-emerald-400">${acc.winrate || 'N/A'}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-shield-halved text-amber-400 text-lg"></i>
+                            <div>
+                                <p class="text-[10px] text-gray-400">ချိတ်ဆက်မှု</p>
+                                <p class="font-bold text-gray-200">Moonton Clean</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <h4 class="text-xs font-bold text-gray-300 flex items-center gap-1.5">
+                            <i class="fa-solid fa-crown text-amber-400"></i> ပါဝင်သော Rare Skin Highlights
+                        </h4>
+                        <div class="flex flex-wrap gap-1.5">
+                            ${(acc.highlights || []).map(hl => `
+                                <span class="bg-amber-500/15 text-amber-300 text-xs px-2.5 py-1 rounded-lg border border-amber-500/30 font-medium">
+                                    🌟 ${hl}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="space-y-1 text-xs text-gray-300 bg-darkbg p-3.5 rounded-xl border border-darkborder leading-relaxed">
+                        <p class="font-semibold text-amber-400">အသေးစိတ် အချက်အလက်များ:</p>
+                        <p>${acc.description || 'အသေးစိတ်အချက်အလက်များကို Admin Telegram တွင် တိုက်ရိုက်မေးမြန်းနိုင်ပါသည်။'}</p>
+                    </div>
+
+                    <div class="pt-2 flex flex-col sm:flex-row items-center gap-3">
+                        ${isSold ? `
+                            <button disabled class="w-full py-3.5 rounded-xl bg-gray-800 text-gray-400 font-bold text-sm cursor-not-allowed">
+                                ဤ Account ကို ရောင်းချပြီးပါပြီ (Sold Out)
+                            </button>
+                        ` : `
+                            <a href="${tgLink}" target="_blank" rel="noopener noreferrer" 
+                                class="w-full py-3.5 rounded-xl gold-gradient-btn text-black font-extrabold text-sm text-center shadow-lg flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-telegram text-base"></i>
+                                <span>Telegram ဖြင့် တိုက်ရိုက် ဝယ်ယူမည်</span>
+                            </a>
+                        `}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('accountModal').classList.remove('hidden');
+        };
+
+        window.setModalImg = function(index) {
+            activeModalImageIndex = index;
+            document.getElementById('mainModalImg').src = currentModalImages[index];
+            document.getElementById('imgCounter').innerText = index + 1;
+            currentModalImages.forEach((_, idx) => {
+                const thumb = document.getElementById(`thumb-${idx}`);
+                if (thumb) {
+                    if (idx === index) {
+                        thumb.className = "w-16 h-12 object-cover rounded-lg border-2 border-amber-500 opacity-100 cursor-pointer transition-all";
+                    } else {
+                        thumb.className = "w-16 h-12 object-cover rounded-lg border-2 border-transparent opacity-60 hover:opacity-100 cursor-pointer transition-all";
+                    }
+                }
+            });
+        };
+
+        window.prevModalImg = function() {
+            let newIndex = activeModalImageIndex - 1;
+            if (newIndex < 0) newIndex = currentModalImages.length - 1;
+            setModalImg(newIndex);
+        };
+
+        window.nextModalImg = function() {
+            let newIndex = activeModalImageIndex + 1;
+            if (newIndex >= currentModalImages.length) newIndex = 0;
+            setModalImg(newIndex);
+        };
+
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        };
+
+        window.openAdminModal = function() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.remove('hidden');
+
+            if (currentAdminLoggedIn) {
+                document.getElementById('adminLoginView').classList.add('hidden');
+                document.getElementById('adminDashboardView').classList.remove('hidden');
+                renderAdminTable();
+            } else {
+                document.getElementById('adminLoginView').classList.remove('hidden');
+                document.getElementById('adminDashboardView').classList.add('hidden');
+            }
+        };
+
+        window.handleAdminLogin = function(e) {
+            e.preventDefault();
+            const enteredPass = document.getElementById('adminPasswordInput').value;
+            const actualPass = localStorage.getItem(STORAGE_KEY_PASS) || 'admin123';
+
+            if (enteredPass === actualPass) {
+                currentAdminLoggedIn = true;
+                document.getElementById('adminPasswordInput').value = '';
+                document.getElementById('adminLoginView').classList.add('hidden');
+                document.getElementById('adminDashboardView').classList.remove('hidden');
+                document.getElementById('adminBtnText').innerText = "Admin (Active)";
+                renderAdminTable();
+                showToast('Admin Login အောင်မြင်ပါသည်', 'success');
+            } else {
+                showToast('Password မှားယွင်းနေပါသည်!', 'error');
+            }
+        };
+
+        window.handleAdminLogout = function() {
+            currentAdminLoggedIn = false;
+            document.getElementById('adminBtnText').innerText = "Admin Panel";
+            closeModal('adminModal');
+            showToast('Logout လုပ်ဆောင်ပြီးပါပြီ', 'info');
+        };
+
+        window.showAdminTab = function(tabName) {
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.className = 'admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder';
+            });
+
+            document.getElementById(`adminTab-${tabName}`).className = 'admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 text-black';
+
+            document.getElementById('adminSection-list').classList.add('hidden');
+            document.getElementById('adminSection-add').classList.add('hidden');
+            document.getElementById('adminSection-settings').classList.add('hidden');
+
+            document.getElementById(`adminSection-${tabName}`).classList.remove('hidden');
+
+            if (tabName === 'list') renderAdminTable();
+        };
+
+        window.renderAdminTable = function() {
+            const tbody = document.getElementById('adminAccountTable');
+            document.getElementById('adminTotalCount').innerText = accounts.length;
+
+            if (accounts.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-gray-500">တင်ထားသော Account မရှိသေးပါ</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = accounts.map(acc => {
+                const img = (acc.images && acc.images.length > 0) ? acc.images[0] : 'https://placehold.co/100x60/12141d/f59e0b?text=RINA';
+                const isSold = acc.status === 'SOLD';
+
+                return `
+                    <tr class="hover:bg-darkcard/50 transition-colors">
+                        <td class="p-3">
+                            <img src="${img}" class="w-12 h-9 object-cover rounded-md border border-darkborder">
+                        </td>
+                        <td class="p-3 font-semibold text-white max-w-[150px] truncate">${acc.title}</td>
+                        <td class="p-3"><span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded text-[11px] font-bold">High Rank</span></td>
+                        <td class="p-3 text-gray-300">${acc.skins} Skins / ${acc.heroes} Heroes</td>
+                        <td class="p-3 font-bold text-amber-400">${Number(acc.price).toLocaleString()} Ks</td>
+                        <td class="p-3">
+                            <button onclick="toggleAccountStatus('${acc.id}')" 
+                                class="px-2 py-1 rounded text-[10px] font-bold uppercase transition-all ${isSold ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'}">
+                                ${isSold ? 'SOLD' : 'AVAILABLE'}
+                            </button>
+                        </td>
+                        <td class="p-3 text-right space-x-2">
+                            <button onclick="editAccount('${acc.id}')" class="text-amber-400 hover:text-amber-300 p-1" title="Edit">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="confirmDeleteAccount('${acc.id}')" class="text-red-400 hover:text-red-300 p-1" title="Delete">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        };
+
+        window.toggleAccountStatus = async function(id) {
+            const acc = accounts.find(a => a.id === id);
+            if (!acc) return;
+
+            const nextStatus = acc.status === 'AVAILABLE' ? 'SOLD' : 'AVAILABLE';
+            try {
+                await updateDoc(doc(db, "mlbb_accounts", id), { status: nextStatus });
+                showToast(`အခြေအနေကို ${nextStatus} သို့ ပြောင်းလဲပြီးပါပြီ`, 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('Update လုပ်ရာတွင် အမှားရှိနေပါသည်', 'error');
+            }
+        };
+
+        window.handleImageUpload = function(e) {
+            const files = Array.from(e.target.files);
+            if (!files || files.length === 0) return;
+
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        const maxDim = 800;
+                        if (width > maxDim || height > maxDim) {
+                            if (width > height) {
+                                height = Math.round((height * maxDim) / width);
+                                width = maxDim;
+                            } else {
+                                width = Math.round((width * maxDim) / height);
+                                height = maxDim;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.78);
+                        uploadedImagesBase64.push(compressedBase64);
+                        renderImagePreviews();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        };
+
+        window.renderImagePreviews = function() {
+            const container = document.getElementById('imagePreviewContainer');
+            if (uploadedImagesBase64.length === 0) {
+                container.innerHTML = `<p id="noImageHint" class="text-xs text-gray-500 self-center mx-auto">ပုံမရွေးရသေးပါ</p>`;
+                return;
+            }
+
+            container.innerHTML = uploadedImagesBase64.map((img, idx) => `
+                <div class="relative group w-16 h-16 rounded-lg overflow-hidden border border-amber-500/40">
+                    <img src="${img}" class="w-full h-full object-cover">
+                    <button type="button" onclick="removeUploadedImage(${idx})" 
+                        class="absolute top-0.5 right-0.5 bg-red-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            `).join('');
+        };
+
+        window.removeUploadedImage = function(idx) {
+            uploadedImagesBase64.splice(idx, 1);
+            renderImagePreviews();
+        };
+
+        window.handleSaveAccount = async function(e) {
+            e.preventDefault();
+
+            const editId = document.getElementById('editAccountId').value;
+            const title = document.getElementById('accTitle').value.trim();
+            const rank = 'High Rank';
+            const price = parseFloat(document.getElementById('accPrice').value);
+            const skins = parseInt(document.getElementById('accSkins').value);
+            const heroes = parseInt(document.getElementById('accHeroes').value);
+            const winrate = document.getElementById('accWinrate').value.trim();
+            const telegram = document.getElementById('accTelegram').value.trim() || 'rina_shop247';
+            const status = document.getElementById('accStatus').value;
+            const highlightsRaw = document.getElementById('accHighlights').value;
+            const description = document.getElementById('accDesc').value.trim();
+
+            const highlights = highlightsRaw.split(',').map(s => s.trim()).filter(Boolean);
+
+            try {
+                if (editId) {
+                    const existing = accounts.find(a => a.id === editId);
+                    const payload = {
+                        title, rank, price, skins, heroes, winrate, telegram, status, highlights, description,
+                        images: uploadedImagesBase64.length > 0 ? uploadedImagesBase64 : (existing ? existing.images : [])
+                    };
+                    await updateDoc(doc(db, "mlbb_accounts", editId), payload);
+                    showToast('Account ကို ပြင်ဆင်ပြီးပါပြီ', 'success');
+                } else {
+                    const newId = 'rina-' + Date.now().toString().slice(-6);
+                    const newAcc = {
+                        id: newId,
+                        title, rank, price, skins, heroes, winrate, telegram, status, highlights, description,
+                        images: uploadedImagesBase64.length > 0 ? [...uploadedImagesBase64] : ['https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80'],
+                        created: Date.now()
+                    };
+                    await setDoc(doc(db, "mlbb_accounts", newId), newAcc);
+                    showToast('Account အသစ် တင်ပြီးပါပြီ', 'success');
+                }
+
+                cancelEditForm();
+                showAdminTab('list');
+            } catch (err) {
+                console.error(err);
+                showToast('Firestore ထဲ သိမ်းဆည်းရာတွင် အမှားရှိနေပါသည်', 'error');
+            }
+        };
+
+        window.editAccount = function(id) {
+            const acc = accounts.find(a => a.id === id);
+            if (!acc) return;
+
+            document.getElementById('editAccountId').value = acc.id;
+            document.getElementById('accTitle').value = acc.title;
+            document.getElementById('accRank').value = 'High Rank';
+            document.getElementById('accPrice').value = acc.price;
+            document.getElementById('accSkins').value = acc.skins;
+            document.getElementById('accHeroes').value = acc.heroes;
+            document.getElementById('accWinrate').value = acc.winrate || '';
+            document.getElementById('accTelegram').value = acc.telegram || '';
+            document.getElementById('accStatus').value = acc.status;
+            document.getElementById('accHighlights').value = (acc.highlights || []).join(', ');
+            document.getElementById('accDesc').value = acc.description || '';
+
+            uploadedImagesBase64 = acc.images ? [...acc.images] : [];
+            renderImagePreviews();
+
+            document.getElementById('formHeaderTitle').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Account ကို ပြင်ဆင်မည် (#${acc.id})`;
+            showAdminTab('add');
+        };
+
+        window.cancelEditForm = function() {
+            document.getElementById('editAccountId').value = '';
+            document.getElementById('accTitle').value = '';
+            document.getElementById('accRank').value = 'High Rank';
+            document.getElementById('accPrice').value = '';
+            document.getElementById('accSkins').value = '';
+            document.getElementById('accHeroes').value = '';
+            document.getElementById('accWinrate').value = '';
+            document.getElementById('accTelegram').value = '';
+            document.getElementById('accHighlights').value = '';
+            document.getElementById('accDesc').value = '';
+            uploadedImagesBase64 = [];
+            renderImagePreviews();
+            document.getElementById('formHeaderTitle').innerHTML = `<i class="fa-solid fa-square-plus"></i> MLBB Account အသစ်တင်မည်`;
+        };
+
+        window.confirmDeleteAccount = function(id) {
+            const acc = accounts.find(a => a.id === id);
+            if (!acc) return;
+
+            const toast = document.createElement('div');
+            toast.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm';
+            toast.id = 'deleteModalConfirm';
+            toast.innerHTML = `
+                <div class="bg-darkcard border border-red-500/50 p-6 rounded-2xl max-w-sm w-full space-y-4 text-center shadow-2xl">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-base font-bold text-white">ဖျက်ပစ်ရန် သေချာပါသလား?</h4>
+                        <p class="text-xs text-gray-400 mt-1">${acc.title} ကို စာရင်းမှ ဖျက်ပစ်ပါမည်။</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="executeDelete('${acc.id}')" class="flex-1 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs">
+                            ဖျက်မည်
+                        </button>
+                        <button onclick="document.getElementById('deleteModalConfirm').remove()" class="flex-1 py-2 rounded-xl bg-gray-800 text-gray-300 text-xs">
+                            မဖျက်တော့ပါ
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(toast);
+        };
+
+        window.executeDelete = async function(id) {
+            try {
+                await deleteDoc(doc(db, "mlbb_accounts", id));
+                const modal = document.getElementById('deleteModalConfirm');
+                if (modal) modal.remove();
+                showToast('Account ကို ဖျက်ပစ်ပြီးပါပြီ', 'info');
+            } catch (err) {
+                console.error(err);
+                showToast('ဖျက်ရာတွင် အမှားရှိနေပါသည်', 'error');
+            }
+        };
+
+        window.handleChangePassword = function(e) {
+            e.preventDefault();
+            const newPass = document.getElementById('newAdminPassword').value.trim();
+            if (newPass.length < 4) {
+                showToast('Password သည် အနည်းဆုံး ၄ လုံး ရှိရပါမည်', 'error');
+                return;
+            }
+            localStorage.setItem(STORAGE_KEY_PASS, newPass);
+            document.getElementById('newAdminPassword').value = '';
+            showToast('Admin Password ကို ပြောင်းလဲပြီးပါပြီ', 'success');
+        };
+
+        window.showToast = function(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let bgStyle = 'bg-darkcard border-amber-500/40 text-amber-300';
+            let icon = 'fa-circle-info text-amber-400';
+
+            if (type === 'success') {
+                bgStyle = 'bg-darkcard border-emerald-500/50 text-emerald-300';
+                icon = 'fa-circle-check text-emerald-400';
+            } else if (type === 'error') {
+                bgStyle = 'bg-darkcard border-red-500/50 text-red-300';
+                icon = 'fa-circle-xmark text-red-400';
+            }
+
+            toast.className = `flex items-center gap-2.5 px-4 py-3 rounded-xl border shadow-xl text-xs font-semibold ${bgStyle} transform transition-all duration-300 translate-y-2 opacity-0 pointer-events-auto`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-sm"></i> <span>${message}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        };
+    </script>
+</body>
+</html>
