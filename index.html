@@ -276,7 +276,7 @@
         <!-- ENTRY GATEWAY / SPLASH VIEW -->
         <section id="entryGateway" class="py-6 sm:py-10 flex flex-col items-center justify-center gap-6">
             <!-- Card 1: Mobile Legend Accounts -->
-            <div class="splash-entry-card w-full max-w-xl rounded-3xl hero-light-border p-6 sm:p-8 text-center space-y-6">
+            <div class="splash-entry-card w-full max-w-2xl rounded-3xl hero-light-border p-6 sm:p-8 text-center space-y-6">
                 <div class="relative w-full h-52 sm:h-64 rounded-2xl overflow-hidden border border-amber-500/40 bg-darkbg shadow-xl">
                     <img id="mlbbSplashImg" src="53129ee050d008e49b174d49e2e488e3.jpg" alt="Mobile Legends Account Banner"
                         onerror="if(!this.dataset.f1){this.dataset.f1=1;this.src='1000001942_2.jpg';}else if(!this.dataset.f2){this.dataset.f2=1;this.src='IMG_20261123_150211_100.jpg';}"
@@ -305,33 +305,69 @@
                 </div>
             </div>
 
-            <!-- Card 2: Separate Box for MLBB Dia Prices -->
-            <div class="splash-entry-card w-full max-w-xl rounded-3xl hero-light-border p-6 sm:p-8 text-center space-y-6">
-                <div class="relative w-full h-52 sm:h-64 rounded-2xl overflow-hidden border border-amber-500/40 bg-darkbg shadow-xl">
-                    <img id="diaSplashImg" src="IMG_20261124_210316.jpg?v=3" alt="MLBB Diamond Top-Up Banner"
-                        onerror="if(!this.dataset.f1){this.dataset.f1=1;this.src='1000001941_2.jpg';}else if(!this.dataset.f2){this.dataset.f2=1;this.src='IMG_20261123_150211_100.jpg';}"
-                        class="w-full h-full object-cover object-top">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent pointer-events-none"></div>
-                    <span class="absolute bottom-3 left-3 bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[11px] font-bold px-3 py-1 rounded-full backdrop-blur-sm">
-                        <i class="fa-regular fa-gem mr-1"></i> MLBB DIAMOND TOP-UP
-                    </span>
+            <!-- Row of 2 Cards: MLBB Dia Prices & Star + TG Premium Prices -->
+            <div class="w-full max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 2: MLBB Dia Prices -->
+                <div class="splash-entry-card w-full rounded-3xl hero-light-border p-5 sm:p-6 text-center space-y-5 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="relative w-full h-44 sm:h-48 rounded-2xl overflow-hidden border border-amber-500/40 bg-darkbg shadow-xl">
+                            <img id="diaSplashImg" src="IMG_20261124_210316.jpg?v=3" alt="MLBB Diamond Top-Up Banner"
+                                onerror="if(!this.dataset.f1){this.dataset.f1=1;this.src='1000001941_2.jpg';}else if(!this.dataset.f2){this.dataset.f2=1;this.src='IMG_20261123_150211_100.jpg';}"
+                                class="w-full h-full object-cover object-top">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent pointer-events-none"></div>
+                            <span class="absolute bottom-2.5 left-2.5 bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-sm">
+                                <i class="fa-regular fa-gem mr-1"></i> MLBB DIAMOND TOP-UP
+                            </span>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <h3 class="text-lg sm:text-xl font-extrabold hero-vip-float font-display">
+                                MLBB Diamond ဈေးနှုန်းများ
+                            </h3>
+                            <p class="text-xs text-gray-400">
+                                Weekly Pass နှင့် Diamond Package ဈေးနှုန်းများကို ကြည့်ရှုရန်
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-center pt-1">
+                        <button type="button" onclick="openDiaPricesView()"
+                            class="w-full px-5 py-3 rounded-2xl gold-gradient-btn text-black font-extrabold text-xs sm:text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-regular fa-gem"></i>
+                            <span>Mlbb Dia ဈေးကြည့်ရန်</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="space-y-2">
-                    <h3 class="text-xl sm:text-2xl font-extrabold hero-vip-float font-display">
-                        MLBB Diamond ဈေးနှုန်းများ
-                    </h3>
-                    <p class="text-xs sm:text-sm text-gray-400">
-                        Weekly Pass နှင့် Diamond Package ဈေးနှုန်းများကို ကြည့်ရှုရန် အောက်ပါခလုတ်ကို နှိပ်ပါ
-                    </p>
-                </div>
+                <!-- Card 3: Star & TG Premium Prices -->
+                <div class="splash-entry-card w-full rounded-3xl hero-light-border p-5 sm:p-6 text-center space-y-5 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="relative w-full h-44 sm:h-48 rounded-2xl overflow-hidden border border-amber-500/40 bg-darkbg shadow-xl">
+                            <img id="tgSplashImg" src="IMG_20261123_150211_100.jpg" alt="Telegram Star & Premium Banner"
+                                class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent pointer-events-none"></div>
+                            <span class="absolute bottom-2.5 left-2.5 bg-sky-500/20 text-sky-300 border border-sky-400/40 text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-sm">
+                                <i class="fa-brands fa-telegram mr-1"></i> STAR &amp; TG PREMIUM
+                            </span>
+                        </div>
 
-                <div class="flex items-center justify-center pt-1">
-                    <button type="button" onclick="openDiaPricesView()"
-                        class="w-full sm:w-auto px-6 py-3.5 rounded-2xl gold-gradient-btn text-black font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-regular fa-gem"></i>
-                        <span>Mlbb Dia ဈေးကြည့်ရန်</span>
-                    </button>
+                        <div class="space-y-1.5">
+                            <h3 class="text-lg sm:text-xl font-extrabold hero-vip-float font-display">
+                                Star နှင့် TG Premium ဈေးနှုန်းများ
+                            </h3>
+                            <p class="text-xs text-gray-400">
+                                Telegram Star နှင့် Gift Plan ဈေးနှုန်းများကို ကြည့်ရှုရန်
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-center pt-1">
+                        <button type="button" onclick="openTgStarPremiumView()"
+                            class="w-full px-5 py-3 rounded-2xl gold-gradient-btn text-black font-extrabold text-xs sm:text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-star"></i>
+                            <span>Star နှင့် TG Premium ဈေးကြည့်ရန်</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -388,6 +424,48 @@
                     <div id="diaRightList" class="p-3 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                         <!-- Dynamically rendered -->
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAR & TG PREMIUM PRICES VIEW -->
+        <section id="tgStarPremiumSection" class="hidden space-y-6">
+            <div class="relative rounded-3xl overflow-hidden hero-light-border p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-3 py-1 rounded-full bg-sky-500/15 text-sky-300 border border-sky-500/30 mb-2">
+                            <i class="fa-brands fa-telegram"></i> TELEGRAM STAR &amp; PREMIUM LIST
+                        </span>
+                        <h2 class="text-xl sm:text-2xl font-extrabold hero-vip-float font-display">
+                            Star နှင့် TG Premium ဈေးနှုန်းများ
+                        </h2>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">
+                            ဝယ်ယူလိုသော Telegram Star သို့မဟုတ် Premium Plan ကို နှိပ်ပြီး Telegram မှ တိုက်ရိုက် ဝယ်ယူနိုင်ပါသည်
+                        </p>
+                    </div>
+                    <button type="button" onclick="showEntryGateway()"
+                        class="self-start sm:self-auto px-4 py-2.5 rounded-xl bg-darkinput hover:bg-amber-500/15 text-amber-300 border border-amber-500/40 text-xs font-bold flex items-center gap-2 cursor-pointer transition-all">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>အစစာမျက်နှာသို့</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TELEGRAM PREMIUM GIFT PLANS -->
+            <div id="tgPremiumGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Dynamically rendered -->
+            </div>
+
+            <!-- TELEGRAM STAR PACKAGES -->
+            <div class="rounded-2xl bg-darkcard border border-amber-500/35 overflow-hidden shadow-xl">
+                <div class="px-4 py-3 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border-b border-darkborder flex items-center justify-between">
+                    <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider">
+                        <i class="fa-solid fa-star mr-1.5"></i> Telegram Star Zay Packages
+                    </span>
+                    <span class="text-[11px] text-gray-400">MMK (ကျပ်)</span>
+                </div>
+                <div id="tgStarList" class="p-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+                    <!-- Dynamically rendered -->
                 </div>
             </div>
         </section>
@@ -557,6 +635,9 @@
                         </button>
                         <button onclick="showAdminTab('dia')" id="adminTab-dia" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
                             <i class="fa-regular fa-gem mr-1.5"></i> Dia ဈေးပြင်ရန်
+                        </button>
+                        <button onclick="showAdminTab('tg')" id="adminTab-tg" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
+                            <i class="fa-solid fa-star mr-1.5"></i> Star &amp; TG ဈေးပြင်ရန်
                         </button>
                         <button onclick="showAdminTab('visitors')" id="adminTab-visitors" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
                             <i class="fa-solid fa-eye mr-1.5"></i> Visitors (<span id="adminVisitorBadgeCount">0</span>)
@@ -751,6 +832,65 @@
                                 class="px-6 py-2.5 rounded-xl gold-gradient-btn text-black font-extrabold text-xs shadow-md flex items-center gap-2 cursor-pointer">
                                 <i class="fa-solid fa-floppy-disk"></i>
                                 <span>Dia ဈေးများ သိမ်းမည်</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- TAB 2.6: STAR & TG PREMIUM PRICE EDITOR -->
+                <div id="adminSection-tg" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-darkborder pb-3">
+                        <div>
+                            <h4 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+                                <i class="fa-solid fa-star"></i> Star &amp; TG ဈေးပြင်ရန် (Telegram Star &amp; Premium Prices)
+                            </h4>
+                            <p class="text-xs text-gray-400 mt-0.5">
+                                Telegram Star နှင့် Premium Gift Plan ဈေးနှုန်းများကို ပြင်ဆင်နိုင်ပြီး အသစ်ထပ်ထည့်နိုင်ပါသည်
+                            </p>
+                        </div>
+                        <button type="button" onclick="handleSaveTgPrices()"
+                            class="px-5 py-2.5 rounded-xl gold-gradient-btn text-black font-extrabold text-xs shadow-md flex items-center gap-2 self-start sm:self-auto cursor-pointer">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            <span>Star &amp; TG ဈေးများ သိမ်းမည်</span>
+                        </button>
+                    </div>
+
+                    <form id="tgPriceEditorForm" onsubmit="event.preventDefault(); handleSaveTgPrices();" class="space-y-6">
+                        <!-- Editable TG Premium Gift Plans -->
+                        <div class="space-y-2.5">
+                            <div class="flex items-center justify-between gap-2">
+                                <p class="text-xs font-bold text-amber-300">Telegram Premium (Gift Plan) များ</p>
+                                <button type="button" onclick="addEditableTgPremiumRow()"
+                                    class="px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-[11px] font-bold flex items-center gap-1.5 cursor-pointer transition-all">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Premium Plan အသစ်ထည့်မည်</span>
+                                </button>
+                            </div>
+                            <div id="adminTgPremiumInputs" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <!-- Dynamic editable TG premium rows -->
+                            </div>
+                        </div>
+
+                        <!-- Editable Telegram Star Packages -->
+                        <div class="space-y-2.5">
+                            <div class="flex items-center justify-between gap-2">
+                                <p class="text-xs font-bold text-amber-300">Telegram Star Packages များ</p>
+                                <button type="button" onclick="addEditableTgStarRow()"
+                                    class="px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-[11px] font-bold flex items-center gap-1.5 cursor-pointer transition-all">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Star Package အသစ်ထည့်မည်</span>
+                                </button>
+                            </div>
+                            <div id="adminTgStarInputs" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <!-- Dynamic editable TG star rows -->
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex items-center justify-end gap-3 border-t border-darkborder">
+                            <button type="submit"
+                                class="px-6 py-2.5 rounded-xl gold-gradient-btn text-black font-extrabold text-xs shadow-md flex items-center gap-2 cursor-pointer">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Star &amp; TG ဈေးများ သိမ်းမည်</span>
                             </button>
                         </div>
                     </form>
@@ -1031,6 +1171,24 @@
             ]
         };
 
+        const DEFAULT_TG_DATA = {
+            premium: [
+                { id: 'tgp-3m', label: '3 Months (Gift plan)', price: 62000 },
+                { id: 'tgp-6m', label: '6 Months (Gift plan)', price: 84000 },
+                { id: 'tgp-1y', label: '1 Year (Gift Plan)', price: 146000 }
+            ],
+            stars: [
+                { id: 'tgs-50', amount: '50', price: 3800 },
+                { id: 'tgs-100', amount: '100', price: 7600 },
+                { id: 'tgs-150', amount: '150', price: 11400 },
+                { id: 'tgs-200', amount: '200', price: 15200 },
+                { id: 'tgs-250', amount: '250', price: 19000 },
+                { id: 'tgs-300', amount: '300', price: 22800 },
+                { id: 'tgs-500', amount: '500', price: 38000 },
+                { id: 'tgs-1000', amount: '1000', price: 76000 }
+            ]
+        };
+
         function cloneDefaultDiaData() {
             return {
                 bundles: DEFAULT_DIA_DATA.bundles.map(b => ({ ...b })),
@@ -1038,9 +1196,20 @@
             };
         }
 
+        function cloneDefaultTgData() {
+            return {
+                premium: DEFAULT_TG_DATA.premium.map(p => ({ ...p })),
+                stars: DEFAULT_TG_DATA.stars.map(s => ({ ...s }))
+            };
+        }
+
         let diaData = cloneDefaultDiaData();
         let draftDiaData = cloneDefaultDiaData();
         const diaPricesDocRef = doc(db, "store_settings", "mlbb_dia_prices");
+
+        let tgData = cloneDefaultTgData();
+        let draftTgData = cloneDefaultTgData();
+        const tgPricesDocRef = doc(db, "store_settings", "tg_star_premium_prices");
 
         let accounts = [];
         let activeFilter = 'ALL';
@@ -1140,6 +1309,8 @@
                     renderAdminTable();
                     resetDraftFromDiaData();
                     renderAdminDiaEditor();
+                    resetDraftFromTgData();
+                    renderAdminTgEditor();
                     startVisitorLogsSync();
                 } else {
                     stopVisitorLogsSync();
@@ -1202,10 +1373,44 @@
             };
         }
 
+        function normalizeTgData(raw) {
+            if (!raw || typeof raw !== 'object') {
+                return cloneDefaultTgData();
+            }
+
+            const premium = Array.isArray(raw.premium)
+                ? raw.premium.map((p, idx) => ({
+                    id: p.id || `tgp-${idx}-${Date.now()}`,
+                    label: String(p.label ?? '').trim(),
+                    price: Number(p.price ?? 0)
+                }))
+                : cloneDefaultTgData().premium;
+
+            const stars = Array.isArray(raw.stars)
+                ? raw.stars.map((s, idx) => ({
+                    id: s.id || `tgs-${idx}-${Date.now()}`,
+                    amount: String(s.amount ?? '').trim(),
+                    price: Number(s.price ?? 0)
+                }))
+                : cloneDefaultTgData().stars;
+
+            return {
+                premium: premium.length > 0 ? premium : cloneDefaultTgData().premium,
+                stars: stars.length > 0 ? stars : cloneDefaultTgData().stars
+            };
+        }
+
         function resetDraftFromDiaData() {
             draftDiaData = {
                 bundles: diaData.bundles.map(b => ({ ...b })),
                 packages: diaData.packages.map(p => ({ ...p }))
+            };
+        }
+
+        function resetDraftFromTgData() {
+            draftTgData = {
+                premium: tgData.premium.map(p => ({ ...p })),
+                stars: tgData.stars.map(s => ({ ...s }))
             };
         }
 
@@ -1258,6 +1463,48 @@
             rightList.innerHTML = rightPkgs.map(buildBox).join('');
         }
 
+        function renderTgStarPremiumView() {
+            const premiumGrid = document.getElementById('tgPremiumGrid');
+            const starList = document.getElementById('tgStarList');
+            if (!premiumGrid || !starList) return;
+
+            premiumGrid.innerHTML = tgData.premium.map((item) => {
+                const labelText = item.label || 'Telegram Premium';
+                const priceVal = Number(item.price || 0);
+                const formatted = priceVal.toLocaleString();
+                const tgMsg = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ Telegram Premium ${labelText} (ဈေးနှုန်း: ${formatted} Ks) ဝယ်ယူလိုပါသည်။`);
+                return `
+                    <a href="https://t.me/lilrina2k2?text=${tgMsg}" target="_blank" rel="noopener noreferrer"
+                        class="group rounded-2xl bg-darkcard border border-amber-500/40 hover:border-amber-400 p-4 flex items-center gap-3 shadow-lg transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-300 flex-shrink-0">
+                            <i class="fa-brands fa-telegram text-lg"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-xs sm:text-sm font-extrabold text-white group-hover:text-amber-300 transition-colors truncate">${labelText}</p>
+                            <p class="text-xs sm:text-sm text-amber-400 font-extrabold mt-0.5">${formatted} ks</p>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+
+            starList.innerHTML = tgData.stars.map((st) => {
+                const amtText = st.amount || 'Star';
+                const priceVal = Number(st.price || 0);
+                const formatted = priceVal.toLocaleString();
+                const tgMsg = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ Telegram Star ${amtText} (ဈေးနှုန်း: ${formatted} Ks) ဝယ်ယူလိုပါသည်။`);
+                return `
+                    <a href="https://t.me/lilrina2k2?text=${tgMsg}" target="_blank" rel="noopener noreferrer"
+                        class="rounded-xl bg-darkbg hover:bg-amber-500/10 border border-darkborder hover:border-amber-500/50 px-3 py-2.5 flex items-center justify-between gap-2 transition-all">
+                        <span class="text-xs sm:text-sm font-extrabold text-white tracking-wide flex items-center gap-1.5">
+                            <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+                            <span>${amtText}</span>
+                        </span>
+                        <span class="text-xs sm:text-sm font-extrabold text-amber-400 whitespace-nowrap">${formatted} ks</span>
+                    </a>
+                `;
+            }).join('');
+        }
+
         function syncDraftInputsFromDom() {
             draftDiaData.bundles.forEach((b) => {
                 const labelEl = document.getElementById(`diaBundleLabel-${b.id}`);
@@ -1271,6 +1518,22 @@
                 const priceEl = document.getElementById(`diaPkgPrice-${p.id}`);
                 if (amtEl) p.amount = amtEl.value;
                 if (priceEl) p.price = priceEl.value;
+            });
+        }
+
+        function syncTgDraftInputsFromDom() {
+            draftTgData.premium.forEach((p) => {
+                const labelEl = document.getElementById(`tgPremiumLabel-${p.id}`);
+                const priceEl = document.getElementById(`tgPremiumPrice-${p.id}`);
+                if (labelEl) p.label = labelEl.value;
+                if (priceEl) p.price = priceEl.value;
+            });
+
+            draftTgData.stars.forEach((s) => {
+                const amtEl = document.getElementById(`tgStarAmount-${s.id}`);
+                const priceEl = document.getElementById(`tgStarPrice-${s.id}`);
+                if (amtEl) s.amount = amtEl.value;
+                if (priceEl) s.price = priceEl.value;
             });
         }
 
@@ -1317,6 +1580,49 @@
             `).join('');
         }
 
+        function renderAdminTgEditor() {
+            const premiumContainer = document.getElementById('adminTgPremiumInputs');
+            const starContainer = document.getElementById('adminTgStarInputs');
+            if (!premiumContainer || !starContainer) return;
+
+            premiumContainer.innerHTML = draftTgData.premium.map((item) => `
+                <div class="bg-darkbg border border-darkborder rounded-xl p-3 flex items-center gap-2">
+                    <div class="flex-1 min-w-0 space-y-1.5">
+                        <input type="text" id="tgPremiumLabel-${item.id}" value="${String(item.label).replace(/"/g, '&quot;')}" placeholder="Plan အမည် (ဥပမာ- 3 Months (Gift plan))" required
+                            class="w-full bg-darkinput border border-darkborder focus:border-amber-500 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white focus:outline-none">
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" min="0" step="1" id="tgPremiumPrice-${item.id}" value="${Number(item.price || 0)}" placeholder="ဈေးနှုန်း" required
+                                class="w-full bg-darkinput border border-darkborder focus:border-amber-500 rounded-lg px-2.5 py-1.5 text-xs font-bold text-amber-300 focus:outline-none">
+                            <span class="text-[11px] font-bold text-gray-400 flex-shrink-0">ks</span>
+                        </div>
+                    </div>
+                    <button type="button" onclick="removeEditableTgPremiumRow('${item.id}')" title="ဖျက်ရန်"
+                        class="self-stretch px-2.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs cursor-pointer transition-all">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            starContainer.innerHTML = draftTgData.stars.map((st) => `
+                <div class="bg-darkbg border border-darkborder rounded-xl p-2.5 flex items-center gap-2">
+                    <div class="w-24 flex-shrink-0 flex items-center gap-1 bg-darkinput border border-darkborder rounded-lg px-2 py-1.5">
+                        <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+                        <input type="text" id="tgStarAmount-${st.id}" value="${String(st.amount).replace(/"/g, '&quot;')}" placeholder="Star" required
+                            class="w-full bg-transparent text-xs font-extrabold text-white focus:outline-none">
+                    </div>
+                    <div class="flex-1 flex items-center gap-1 min-w-0">
+                        <input type="number" min="0" step="1" id="tgStarPrice-${st.id}" value="${Number(st.price || 0)}" placeholder="ဈေးနှုန်း" required
+                            class="w-full bg-darkinput border border-darkborder focus:border-amber-500 rounded-lg px-2.5 py-1.5 text-xs font-bold text-amber-300 text-right focus:outline-none">
+                        <span class="text-[11px] font-bold text-gray-400 flex-shrink-0">ks</span>
+                    </div>
+                    <button type="button" onclick="removeEditableTgStarRow('${st.id}')" title="ဖျက်ရန်"
+                        class="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs cursor-pointer transition-all flex-shrink-0">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
         window.addEditableBundleRow = function() {
             syncDraftInputsFromDom();
             draftDiaData.bundles.push({
@@ -1351,6 +1657,38 @@
             renderAdminDiaEditor();
         };
 
+        window.addEditableTgPremiumRow = function() {
+            syncTgDraftInputsFromDom();
+            draftTgData.premium.push({
+                id: 'tgp-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+                label: '',
+                price: 0
+            });
+            renderAdminTgEditor();
+        };
+
+        window.removeEditableTgPremiumRow = function(id) {
+            syncTgDraftInputsFromDom();
+            draftTgData.premium = draftTgData.premium.filter(p => p.id !== id);
+            renderAdminTgEditor();
+        };
+
+        window.addEditableTgStarRow = function() {
+            syncTgDraftInputsFromDom();
+            draftTgData.stars.push({
+                id: 'tgs-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+                amount: '',
+                price: 0
+            });
+            renderAdminTgEditor();
+        };
+
+        window.removeEditableTgStarRow = function(id) {
+            syncTgDraftInputsFromDom();
+            draftTgData.stars = draftTgData.stars.filter(s => s.id !== id);
+            renderAdminTgEditor();
+        };
+
         function initDiaPricesSync() {
             onSnapshot(diaPricesDocRef, (docSnap) => {
                 if (docSnap.exists()) {
@@ -1369,14 +1707,47 @@
             });
         }
 
+        function initTgPricesSync() {
+            onSnapshot(tgPricesDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    tgData = normalizeTgData(docSnap.data());
+                } else {
+                    tgData = cloneDefaultTgData();
+                }
+                renderTgStarPremiumView();
+                if (currentAdminUser) {
+                    resetDraftFromTgData();
+                    renderAdminTgEditor();
+                }
+            }, (error) => {
+                console.error("TG prices listener error:", error);
+                renderTgStarPremiumView();
+            });
+        }
+
         window.openDiaPricesView = function() {
             const gateway = document.getElementById('entryGateway');
             const storefront = document.getElementById('storefrontContent');
             const diaSection = document.getElementById('diaPricesSection');
+            const tgSection = document.getElementById('tgStarPremiumSection');
             if (gateway) gateway.classList.add('hidden');
             if (storefront) storefront.classList.add('hidden');
+            if (tgSection) tgSection.classList.add('hidden');
             if (diaSection) diaSection.classList.remove('hidden');
             renderDiaPricesView();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.openTgStarPremiumView = function() {
+            const gateway = document.getElementById('entryGateway');
+            const storefront = document.getElementById('storefrontContent');
+            const diaSection = document.getElementById('diaPricesSection');
+            const tgSection = document.getElementById('tgStarPremiumSection');
+            if (gateway) gateway.classList.add('hidden');
+            if (storefront) storefront.classList.add('hidden');
+            if (diaSection) diaSection.classList.add('hidden');
+            if (tgSection) tgSection.classList.remove('hidden');
+            renderTgStarPremiumView();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
@@ -1446,12 +1817,79 @@
             }
         };
 
+        window.handleSaveTgPrices = async function() {
+            if (!currentAdminUser) {
+                showToast('Admin Login အရင်ဝင်ပါ', 'error');
+                return;
+            }
+
+            syncTgDraftInputsFromDom();
+
+            const cleanedPremium = [];
+            for (const p of draftTgData.premium) {
+                const labelVal = String(p.label || '').trim();
+                const priceVal = Number(p.price);
+                if (!labelVal) {
+                    showToast('Premium Plan အမည် ထည့်သွင်းပါ', 'error');
+                    return;
+                }
+                if (Number.isNaN(priceVal) || priceVal < 0) {
+                    showToast(`${labelVal} ဈေးနှုန်း မှန်ကန်စွာ ထည့်ပါ`, 'error');
+                    return;
+                }
+                cleanedPremium.push({
+                    id: p.id,
+                    label: labelVal,
+                    price: Math.round(priceVal)
+                });
+            }
+
+            const cleanedStars = [];
+            for (const s of draftTgData.stars) {
+                const amtVal = String(s.amount || '').trim();
+                const priceVal = Number(s.price);
+                if (!amtVal) {
+                    showToast('Star ပမာဏ ထည့်သွင်းပါ', 'error');
+                    return;
+                }
+                if (Number.isNaN(priceVal) || priceVal < 0) {
+                    showToast(`${amtVal} Star ဈေးနှုန်း မှန်ကန်စွာ ထည့်ပါ`, 'error');
+                    return;
+                }
+                cleanedStars.push({
+                    id: s.id,
+                    amount: amtVal,
+                    price: Math.round(priceVal)
+                });
+            }
+
+            const payload = {
+                premium: cleanedPremium,
+                stars: cleanedStars,
+                updatedAt: Date.now()
+            };
+
+            try {
+                await setDoc(tgPricesDocRef, payload);
+                tgData = normalizeTgData(payload);
+                resetDraftFromTgData();
+                renderTgStarPremiumView();
+                renderAdminTgEditor();
+                showToast('Star နှင့် TG Premium ဈေးနှုန်းများ သိမ်းဆည်းပြီးပါပြီ', 'success');
+            } catch (err) {
+                console.error("Save TG prices error:", err);
+                showToast('Star & TG ဈေးသိမ်းမရပါ။ Firestore Rules စစ်ဆေးပါ။', 'error');
+            }
+        };
+
         window.addEventListener('DOMContentLoaded', () => {
             updateAdminVisibility();
             recordPageVisit();
             renderDiaPricesView();
+            renderTgStarPremiumView();
             initFirestoreSync();
             initDiaPricesSync();
+            initTgPricesSync();
             initAuthSync();
         });
 
@@ -1601,8 +2039,10 @@
             const gateway = document.getElementById('entryGateway');
             const storefront = document.getElementById('storefrontContent');
             const diaSection = document.getElementById('diaPricesSection');
+            const tgSection = document.getElementById('tgStarPremiumSection');
             if (gateway) gateway.classList.add('hidden');
             if (diaSection) diaSection.classList.add('hidden');
+            if (tgSection) tgSection.classList.add('hidden');
             if (storefront) storefront.classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
@@ -1611,8 +2051,10 @@
             const gateway = document.getElementById('entryGateway');
             const storefront = document.getElementById('storefrontContent');
             const diaSection = document.getElementById('diaPricesSection');
+            const tgSection = document.getElementById('tgStarPremiumSection');
             if (storefront) storefront.classList.add('hidden');
             if (diaSection) diaSection.classList.add('hidden');
+            if (tgSection) tgSection.classList.add('hidden');
             if (gateway) gateway.classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
@@ -1800,6 +2242,8 @@
                 renderAdminTable();
                 resetDraftFromDiaData();
                 renderAdminDiaEditor();
+                resetDraftFromTgData();
+                renderAdminTgEditor();
                 startVisitorLogsSync();
             } else {
                 document.getElementById('adminLoginView').classList.remove('hidden');
@@ -1867,6 +2311,7 @@
             document.getElementById('adminSection-list').classList.add('hidden');
             document.getElementById('adminSection-add').classList.add('hidden');
             document.getElementById('adminSection-dia').classList.add('hidden');
+            document.getElementById('adminSection-tg').classList.add('hidden');
             document.getElementById('adminSection-visitors').classList.add('hidden');
             document.getElementById('adminSection-settings').classList.add('hidden');
 
@@ -1876,6 +2321,10 @@
             if (tabName === 'dia') {
                 resetDraftFromDiaData();
                 renderAdminDiaEditor();
+            }
+            if (tabName === 'tg') {
+                resetDraftFromTgData();
+                renderAdminTgEditor();
             }
             if (tabName === 'visitors') {
                 startVisitorLogsSync();
