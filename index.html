@@ -439,7 +439,7 @@
                                     <span>ပုံရွေးချယ်ပါ (Select Photos)</span>
                                     <input type="file" id="imageInput" accept="image/*" multiple onchange="handleImageUpload(event)" class="hidden">
                                 </label>
-                                <span class="text-[11px] text-gray-400">ဖုန်း/ကွန်ပျူတာထဲမှ တိုက်ရိုက်ပုံတင်နိုင်ပါသည်။</span>
+                                <span class="text-[11px] text-gray-400">ရွေးချယ်သည့် အစဉ်လိုက်အတိုင်း ထည့်သွင်းပေးပါမည်။</span>
                             </div>
 
                             <div id="imagePreviewContainer" class="flex flex-wrap gap-3 mt-3 min-h-[60px] p-2 bg-darkbg border border-darkborder rounded-xl">
@@ -524,6 +524,42 @@
             if (!trimmed) return 'High Rank';
             if (/high\s*rank/i.test(trimmed)) return trimmed;
             return `High Rank ${trimmed}`;
+        }
+
+        function compressSingleFile(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        const maxDim = 800;
+                        if (width > maxDim || height > maxDim) {
+                            if (width > height) {
+                                height = Math.round((height * maxDim) / width);
+                                width = maxDim;
+                            } else {
+                                width = Math.round((width * maxDim) / height);
+                                height = maxDim;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        resolve(canvas.toDataURL('image/jpeg', 0.78));
+                    };
+                    img.onerror = () => resolve(event.target.result);
+                    img.src = event.target.result;
+                };
+                reader.onerror = () => resolve(null);
+                reader.readAsDataURL(file);
+            });
         }
 
         function initFirestoreSync() {
@@ -972,43 +1008,18 @@
             }
         };
 
-        window.handleImageUpload = function(e) {
+        window.handleImageUpload = async function(e) {
             const files = Array.from(e.target.files);
             if (!files || files.length === 0) return;
 
-            files.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.onload = function() {
-                        const canvas = document.createElement('canvas');
-                        let width = img.width;
-                        let height = img.height;
-
-                        const maxDim = 800;
-                        if (width > maxDim || height > maxDim) {
-                            if (width > height) {
-                                height = Math.round((height * maxDim) / width);
-                                width = maxDim;
-                            } else {
-                                width = Math.round((width * maxDim) / height);
-                                height = maxDim;
-                            }
-                        }
-
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-
-                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.78);
-                        uploadedImagesBase64.push(compressedBase64);
-                        renderImagePreviews();
-                    };
-                    img.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
+            for (const file of files) {
+                const compressedBase64 = await compressSingleFile(file);
+                if (compressedBase64) {
+                    uploadedImagesBase64.push(compressedBase64);
+                }
+            }
+            e.target.value = '';
+            renderImagePreviews();
         };
 
         window.renderImagePreviews = function() {
@@ -1021,6 +1032,7 @@
             container.innerHTML = uploadedImagesBase64.map((img, idx) => `
                 <div class="relative group w-16 h-16 rounded-lg overflow-hidden border border-amber-500/40">
                     <img src="${img}" class="w-full h-full object-cover">
+                    <span class="absolute bottom-0.5 left-0.5 bg-black/75 text-amber-300 text-[9px] font-bold px-1 rounded">${idx + 1}</span>
                     <button type="button" onclick="removeUploadedImage(${idx})" 
                         class="absolute top-0.5 right-0.5 bg-red-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow">
                         <i class="fa-solid fa-xmark"></i>
@@ -1056,7 +1068,7 @@
                     const existing = accounts.find(a => a.id === editId);
                     const payload = {
                         title, rank, price, skins, heroes, winrate, telegram, status, highlights, description,
-                        images: uploadedImagesBase64.length > 0 ? uploadedImagesBase64 : (existing ? existing.images : [])
+                        images: uploadedImagesBase64.length > 0 ? [...uploadedImagesBase64] : (existing ? existing.images : [])
                     };
                     await updateDoc(doc(db, "mlbb_accounts", editId), payload);
                     showToast('Account ကို ပြင်ဆင်ပြီးပါပြီ', 'success');
