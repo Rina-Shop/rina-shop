@@ -548,7 +548,7 @@
             <!-- DASHBOARD VIEW (AFTER AUTH) -->
             <div id="adminDashboardView" class="hidden p-6 space-y-6">
                 <div class="flex flex-wrap items-center justify-between gap-4 border-b border-darkborder pb-4">
-                    <div class="flex items-center gap-2">
+                    <div class="flex flex-wrap items-center gap-2">
                         <button onclick="showAdminTab('list')" id="adminTab-list" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 text-black">
                             <i class="fa-solid fa-list mr-1.5"></i> Accounts စာရင်း
                         </button>
@@ -557,6 +557,9 @@
                         </button>
                         <button onclick="showAdminTab('dia')" id="adminTab-dia" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
                             <i class="fa-regular fa-gem mr-1.5"></i> Dia ဈေးပြင်ရန်
+                        </button>
+                        <button onclick="showAdminTab('visitors')" id="adminTab-visitors" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
+                            <i class="fa-solid fa-eye mr-1.5"></i> Visitors (<span id="adminVisitorBadgeCount">0</span>)
                         </button>
                         <button onclick="showAdminTab('settings')" id="adminTab-settings" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
                             <i class="fa-solid fa-gear mr-1.5"></i> Account Info
@@ -753,6 +756,41 @@
                     </form>
                 </div>
 
+                <!-- TAB 2.8: VISITOR LOGS (ADMIN ONLY) -->
+                <div id="adminSection-visitors" class="hidden space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-darkborder pb-3">
+                        <div>
+                            <h4 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+                                <i class="fa-solid fa-eye"></i> Website ဝင်ကြည့်သူ မှတ်တမ်းများ (Admin Only)
+                            </h4>
+                            <p class="text-xs text-gray-400 mt-0.5">
+                                စုစုပေါင်း Visit: <span id="visitorTotalCount" class="text-amber-300 font-bold">0</span> | ယနေ့ Visit: <span id="visitorTodayCount" class="text-emerald-400 font-bold">0</span>
+                            </p>
+                        </div>
+                        <button type="button" onclick="clearVisitorLogs()"
+                            class="px-3.5 py-2 rounded-xl bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/35 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all">
+                            <i class="fa-solid fa-trash-can"></i>
+                            <span>မှတ်တမ်းများ ရှင်းမည်</span>
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-2xl border border-darkborder bg-darkbg">
+                        <table class="w-full text-left text-xs text-gray-300">
+                            <thead class="bg-darkcard text-amber-400 uppercase tracking-wider font-semibold border-b border-darkborder">
+                                <tr>
+                                    <th class="p-3">အချိန်</th>
+                                    <th class="p-3">စက် / Browser</th>
+                                    <th class="p-3">Screen / View</th>
+                                    <th class="p-3">Referer</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminVisitorTable" class="divide-y divide-darkborder">
+                                <tr><td colspan="4" class="text-center py-6 text-gray-500">မှတ်တမ်း ရယူနေပါသည်...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <!-- TAB 3: SETTINGS (FIREBASE AUTH INFO) -->
                 <div id="adminSection-settings" class="hidden space-y-4 max-w-lg">
                     <h4 class="text-sm font-bold text-amber-400">Firebase Authentication Status</h4>
@@ -780,10 +818,15 @@
             collection,
             doc,
             getDoc,
+            getDocs,
             setDoc,
+            addDoc,
             updateDoc,
             deleteDoc,
-            onSnapshot
+            onSnapshot,
+            query,
+            orderBy,
+            limit
         } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
         import {
             getAuth,
@@ -806,8 +849,129 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
         const accountsCol = collection(db, "mlbb_accounts");
+        const visitsCol = collection(db, "visit_logs");
 
         const ADMIN_ACCESS_KEY = "rina2026";
+        let visitorLogs = [];
+        let visitorUnsubscribe = null;
+
+        function detectDeviceSummary(ua) {
+            const s = String(ua || "");
+            let os = "Unknown OS";
+            if (/Android/i.test(s)) os = "Android";
+            else if (/iPhone|iPad|iPod/i.test(s)) os = "iOS";
+            else if (/Windows/i.test(s)) os = "Windows";
+            else if (/Mac OS/i.test(s)) os = "macOS";
+            else if (/Linux/i.test(s)) os = "Linux";
+
+            let browser = "Browser";
+            if (/Edg\//i.test(s)) browser = "Edge";
+            else if (/OPR\//i.test(s) || /Opera/i.test(s)) browser = "Opera";
+            else if (/Chrome\//i.test(s)) browser = "Chrome";
+            else if (/Safari\//i.test(s)) browser = "Safari";
+            else if (/Firefox\//i.test(s)) browser = "Firefox";
+
+            return `${os} • ${browser}`;
+        }
+
+        async function recordPageVisit() {
+            try {
+                if (hasSecretAdminAccess()) return;
+                const sessionKey = "rina_visit_recorded_v1";
+                if (sessionStorage.getItem(sessionKey)) return;
+                sessionStorage.setItem(sessionKey, "1");
+
+                const ua = navigator.userAgent || "";
+                const ref = document.referrer ? document.referrer.slice(0, 120) : "Direct";
+                await addDoc(visitsCol, {
+                    timestamp: Date.now(),
+                    device: detectDeviceSummary(ua),
+                    screen: `${window.innerWidth}x${window.innerHeight}`,
+                    referer: ref,
+                    path: window.location.pathname || "/"
+                });
+            } catch (_) {
+                // Silent fail if rules block or offline
+            }
+        }
+
+        function startVisitorLogsSync() {
+            if (!currentAdminUser) return;
+            if (visitorUnsubscribe) return;
+            const q = query(visitsCol, orderBy("timestamp", "desc"), limit(100));
+            visitorUnsubscribe = onSnapshot(q, (snap) => {
+                const rows = [];
+                snap.forEach((d) => rows.push({ id: d.id, ...d.data() }));
+                visitorLogs = rows;
+                renderVisitorLogs();
+            }, () => {
+                renderVisitorLogs();
+            });
+        }
+
+        function stopVisitorLogsSync() {
+            if (visitorUnsubscribe) {
+                visitorUnsubscribe();
+                visitorUnsubscribe = null;
+            }
+            visitorLogs = [];
+            renderVisitorLogs();
+        }
+
+        function renderVisitorLogs() {
+            const tbody = document.getElementById("adminVisitorTable");
+            const totalEl = document.getElementById("visitorTotalCount");
+            const todayEl = document.getElementById("visitorTodayCount");
+            const badgeEl = document.getElementById("adminVisitorBadgeCount");
+
+            if (badgeEl) badgeEl.innerText = visitorLogs.length;
+            if (totalEl) totalEl.innerText = visitorLogs.length;
+
+            const startOfToday = new Date();
+            startOfToday.setHours(0, 0, 0, 0);
+            const todayTs = startOfToday.getTime();
+            const todayCount = visitorLogs.filter((v) => (v.timestamp || 0) >= todayTs).length;
+            if (todayEl) todayEl.innerText = todayCount;
+
+            if (!tbody) return;
+            if (!currentAdminUser) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-gray-500">Admin Login ဝင်ပြီးမှ ကြည့်နိုင်ပါသည်</td></tr>`;
+                return;
+            }
+            if (visitorLogs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-gray-500">Visitor မှတ်တမ်း မရှိသေးပါ</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = visitorLogs.map((v) => {
+                const dt = v.timestamp ? new Date(v.timestamp).toLocaleString("en-GB", { hour12: true }) : "-";
+                const dev = String(v.device || "Unknown").replace(/</g, "&lt;");
+                const scr = String(v.screen || "-").replace(/</g, "&lt;");
+                const ref = String(v.referer || "Direct").replace(/</g, "&lt;");
+                return `
+                    <tr class="hover:bg-darkcard/50 transition-colors">
+                        <td class="p-3 text-gray-300 whitespace-nowrap">${dt}</td>
+                        <td class="p-3 font-semibold text-amber-300">${dev}</td>
+                        <td class="p-3 text-gray-400 whitespace-nowrap">${scr}</td>
+                        <td class="p-3 text-gray-400 max-w-[180px] truncate">${ref}</td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        window.clearVisitorLogs = async function() {
+            if (!currentAdminUser) return;
+            try {
+                const snap = await getDocs(visitsCol);
+                const deletes = [];
+                snap.forEach((d) => deletes.push(deleteDoc(doc(db, "visit_logs", d.id))));
+                await Promise.all(deletes);
+                showToast("Visitor မှတ်တမ်းများ ရှင်းပြီးပါပြီ", "info");
+            } catch (err) {
+                console.error(err);
+                showToast("ရှင်းမရပါ။ Firestore Rules စစ်ဆေးပါ။", "error");
+            }
+        };
 
         function hasSecretAdminAccess() {
             try {
@@ -964,7 +1128,9 @@
                     renderAdminTable();
                     resetDraftFromDiaData();
                     renderAdminDiaEditor();
+                    startVisitorLogsSync();
                 } else {
+                    stopVisitorLogsSync();
                     if (adminBtnText) adminBtnText.innerText = "Admin Panel";
                     if (emailDisplay) emailDisplay.innerText = "-";
                     document.getElementById('adminLoginView').classList.remove('hidden');
@@ -1270,6 +1436,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             updateAdminVisibility();
+            recordPageVisit();
             renderDiaPricesView();
             initFirestoreSync();
             initDiaPricesSync();
@@ -1621,6 +1788,7 @@
                 renderAdminTable();
                 resetDraftFromDiaData();
                 renderAdminDiaEditor();
+                startVisitorLogsSync();
             } else {
                 document.getElementById('adminLoginView').classList.remove('hidden');
                 document.getElementById('adminDashboardView').classList.add('hidden');
@@ -1687,6 +1855,7 @@
             document.getElementById('adminSection-list').classList.add('hidden');
             document.getElementById('adminSection-add').classList.add('hidden');
             document.getElementById('adminSection-dia').classList.add('hidden');
+            document.getElementById('adminSection-visitors').classList.add('hidden');
             document.getElementById('adminSection-settings').classList.add('hidden');
 
             document.getElementById(`adminSection-${tabName}`).classList.remove('hidden');
@@ -1695,6 +1864,10 @@
             if (tabName === 'dia') {
                 resetDraftFromDiaData();
                 renderAdminDiaEditor();
+            }
+            if (tabName === 'visitors') {
+                startVisitorLogsSync();
+                renderVisitorLogs();
             }
         };
 
