@@ -288,15 +288,20 @@
                 </div>
                 <div>
                     <h4 class="text-xl font-bold text-white">Admin Panel သို့ဝင်ရောက်ရန်</h4>
-                    <p class="text-xs text-gray-400 mt-1">မူလ Password: <span class="text-amber-400 font-mono font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">admin123</span></p>
+                    <p class="text-xs text-gray-400 mt-1">Firebase Admin Email နှင့် Password ဖြင့် ဝင်ရောက်ပါ</p>
                 </div>
-                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4 text-left">
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="email" id="adminEmailInput" required placeholder="Admin Email ထည့်ပါ..." 
+                            class="w-full bg-darkinput border border-darkborder focus:border-amber-500 text-sm rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-amber-500">
+                    </div>
                     <div class="relative">
                         <i class="fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                         <input type="password" id="adminPasswordInput" required placeholder="Admin Password ထည့်ပါ..." 
                             class="w-full bg-darkinput border border-darkborder focus:border-amber-500 text-sm rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-amber-500">
                     </div>
-                    <button type="submit" class="w-full py-3 rounded-xl gold-gradient-btn text-black font-extrabold text-sm shadow-lg">
+                    <button type="submit" id="adminLoginBtn" class="w-full py-3 rounded-xl gold-gradient-btn text-black font-extrabold text-sm shadow-lg">
                         Login ဝင်မည် <i class="fa-solid fa-arrow-right-to-bracket ml-1.5"></i>
                     </button>
                 </form>
@@ -313,7 +318,7 @@
                             <i class="fa-solid fa-plus mr-1.5"></i> Account အသစ်ထည့်မည်
                         </button>
                         <button onclick="showAdminTab('settings')" id="adminTab-settings" class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-darkinput text-gray-300 hover:text-white border border-darkborder">
-                            <i class="fa-solid fa-gear mr-1.5"></i> Password ပြောင်းမည်
+                            <i class="fa-solid fa-gear mr-1.5"></i> Account Info
                         </button>
                     </div>
                     <button onclick="handleAdminLogout()" class="px-3 py-1.5 text-xs text-red-400 hover:bg-red-500/10 rounded-lg border border-red-500/30 transition-all">
@@ -448,19 +453,16 @@
                     </form>
                 </div>
 
-                <!-- TAB 3: SETTINGS (CHANGE ADMIN PASSWORD) -->
-                <div id="adminSection-settings" class="hidden space-y-4 max-w-md">
-                    <h4 class="text-sm font-bold text-amber-400">Admin Password ပြောင်းလဲရန်</h4>
-                    <form onsubmit="handleChangePassword(event)" class="space-y-3">
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1">Password အသစ်</label>
-                            <input type="password" id="newAdminPassword" required minlength="4" placeholder="Password အသစ်ထည့်ပါ..." 
-                                class="w-full bg-darkinput border border-darkborder rounded-xl px-3 py-2.5 text-xs text-white focus:border-amber-500 focus:outline-none">
-                        </div>
-                        <button type="submit" class="px-5 py-2.5 rounded-xl gold-gradient-btn text-black font-bold text-xs">
-                            Password ပြောင်းမည်
+                <!-- TAB 3: SETTINGS (FIREBASE AUTH INFO) -->
+                <div id="adminSection-settings" class="hidden space-y-4 max-w-lg">
+                    <h4 class="text-sm font-bold text-amber-400">Firebase Authentication Status</h4>
+                    <div class="bg-darkbg border border-darkborder rounded-2xl p-4 space-y-2 text-xs text-gray-300">
+                        <p>လက်ရှိ ဝင်ရောက်ထားသော Admin: <span id="currentAdminEmailDisplay" class="text-amber-400 font-bold">-</span></p>
+                        <p class="text-gray-400 leading-relaxed">Password ပြောင်းလဲလိုပါက Firebase Console &gt; Authentication &gt; Users ထဲမှ ပြောင်းနိုင်သလို၊ အောက်ပါ ခလုတ်ဖြင့် Password Reset Link ကို Email သို့ ပို့နိုင်ပါသည်။</p>
+                        <button type="button" onclick="sendAdminPasswordReset()" class="mt-2 px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-bold text-xs">
+                            <i class="fa-solid fa-paper-plane mr-1"></i> Password Reset Email ပို့မည်
                         </button>
-                    </form>
+                    </div>
                 </div>
 
             </div>
@@ -482,6 +484,13 @@
             deleteDoc,
             onSnapshot
         } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged,
+            sendPasswordResetEmail
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDePxezfrnwtr52eorLKtY9cqF27EIX1YA",
@@ -494,16 +503,15 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
         const accountsCol = collection(db, "mlbb_accounts");
 
         let accounts = [];
         let activeFilter = 'ALL';
-        let currentAdminLoggedIn = false;
+        let currentAdminUser = null;
         let uploadedImagesBase64 = [];
         let currentModalImages = [];
         let activeModalImageIndex = 0;
-
-        const STORAGE_KEY_PASS = 'rina_admin_password_v1';
 
         function cleanTelegramUsername(raw) {
             return (raw || 'lilrina2k2').replace(/^@/, '').replace(/^https?:\/\/t\.me\//i, '').trim() || 'lilrina2k2';
@@ -553,10 +561,6 @@
         }
 
         function initFirestoreSync() {
-            if (!localStorage.getItem(STORAGE_KEY_PASS)) {
-                localStorage.setItem(STORAGE_KEY_PASS, 'admin123');
-            }
-
             onSnapshot(accountsCol, (querySnapshot) => {
                 const list = [];
                 querySnapshot.forEach((docSnap) => {
@@ -565,17 +569,39 @@
                 });
                 accounts = list;
                 renderAccounts();
-                if (currentAdminLoggedIn) {
+                if (currentAdminUser) {
                     renderAdminTable();
                 }
             }, (error) => {
                 console.error("Firestore listener error:", error);
-                showToast('Firestore Rules ကို စစ်ဆေးပါ (Read/Write ဖွင့်ထားရန်)', 'error');
+                showToast('Firestore Rules ကို စစ်ဆေးပါ (Read ခွင့်ပြုထားရန်)', 'error');
+            });
+        }
+
+        function initAuthSync() {
+            onAuthStateChanged(auth, (user) => {
+                currentAdminUser = user;
+                const adminBtnText = document.getElementById('adminBtnText');
+                const emailDisplay = document.getElementById('currentAdminEmailDisplay');
+
+                if (user) {
+                    if (adminBtnText) adminBtnText.innerText = "Admin (Active)";
+                    if (emailDisplay) emailDisplay.innerText = user.email || 'Authenticated Admin';
+                    document.getElementById('adminLoginView').classList.add('hidden');
+                    document.getElementById('adminDashboardView').classList.remove('hidden');
+                    renderAdminTable();
+                } else {
+                    if (adminBtnText) adminBtnText.innerText = "Admin Panel";
+                    if (emailDisplay) emailDisplay.innerText = "-";
+                    document.getElementById('adminLoginView').classList.remove('hidden');
+                    document.getElementById('adminDashboardView').classList.add('hidden');
+                }
             });
         }
 
         window.addEventListener('DOMContentLoaded', () => {
             initFirestoreSync();
+            initAuthSync();
         });
 
         window.renderAccounts = function() {
@@ -891,7 +917,7 @@
             const modal = document.getElementById('adminModal');
             modal.classList.remove('hidden');
 
-            if (currentAdminLoggedIn) {
+            if (currentAdminUser) {
                 document.getElementById('adminLoginView').classList.add('hidden');
                 document.getElementById('adminDashboardView').classList.remove('hidden');
                 renderAdminTable();
@@ -901,29 +927,53 @@
             }
         };
 
-        window.handleAdminLogin = function(e) {
+        window.handleAdminLogin = async function(e) {
             e.preventDefault();
-            const enteredPass = document.getElementById('adminPasswordInput').value;
-            const actualPass = localStorage.getItem(STORAGE_KEY_PASS) || 'admin123';
+            const email = document.getElementById('adminEmailInput').value.trim();
+            const password = document.getElementById('adminPasswordInput').value;
+            const loginBtn = document.getElementById('adminLoginBtn');
 
-            if (enteredPass === actualPass) {
-                currentAdminLoggedIn = true;
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> စစ်ဆေးနေပါသည်...`;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                document.getElementById('adminEmailInput').value = '';
                 document.getElementById('adminPasswordInput').value = '';
-                document.getElementById('adminLoginView').classList.add('hidden');
-                document.getElementById('adminDashboardView').classList.remove('hidden');
-                document.getElementById('adminBtnText').innerText = "Admin (Active)";
-                renderAdminTable();
-                showToast('Admin Login အောင်မြင်ပါသည်', 'success');
-            } else {
-                showToast('Password မှားယွင်းနေပါသည်!', 'error');
+                showToast('Firebase Admin Login အောင်မြင်ပါသည်', 'success');
+            } catch (err) {
+                console.error("Auth login error:", err);
+                showToast('Email သို့မဟုတ် Password မှားယွင်းနေပါသည်', 'error');
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = `Login ဝင်မည် <i class="fa-solid fa-arrow-right-to-bracket ml-1.5"></i>`;
             }
         };
 
-        window.handleAdminLogout = function() {
-            currentAdminLoggedIn = false;
-            document.getElementById('adminBtnText').innerText = "Admin Panel";
-            closeModal('adminModal');
-            showToast('Logout လုပ်ဆောင်ပြီးပါပြီ', 'info');
+        window.handleAdminLogout = async function() {
+            try {
+                await signOut(auth);
+                closeModal('adminModal');
+                showToast('Logout လုပ်ဆောင်ပြီးပါပြီ', 'info');
+            } catch (err) {
+                console.error("Logout error:", err);
+                showToast('Logout လုပ်ရာတွင် အမှားရှိနေပါသည်', 'error');
+            }
+        };
+
+        window.sendAdminPasswordReset = async function() {
+            const targetEmail = currentAdminUser && currentAdminUser.email ? currentAdminUser.email : '';
+            if (!targetEmail) {
+                showToast('Admin Email မတွေ့ပါ', 'error');
+                return;
+            }
+            try {
+                await sendPasswordResetEmail(auth, targetEmail);
+                showToast(`Reset Link ကို ${targetEmail} သို့ ပို့ပြီးပါပြီ`, 'success');
+            } catch (err) {
+                console.error("Reset email error:", err);
+                showToast('Reset Email ပို့ရာတွင် အမှားရှိနေပါသည်', 'error');
+            }
         };
 
         window.showAdminTab = function(tabName) {
@@ -985,6 +1035,10 @@
         };
 
         window.toggleAccountStatus = async function(id) {
+            if (!currentAdminUser) {
+                showToast('Admin Login အရင်ဝင်ပါ', 'error');
+                return;
+            }
             const acc = accounts.find(a => a.id === id);
             if (!acc) return;
 
@@ -994,7 +1048,7 @@
                 showToast(`အခြေအနေကို ${nextStatus} သို့ ပြောင်းလဲပြီးပါပြီ`, 'success');
             } catch (err) {
                 console.error(err);
-                showToast('Update လုပ်ရာတွင် အမှားရှိနေပါသည်', 'error');
+                showToast('Update လုပ်ရာတွင် အမှားရှိနေပါသည် (Firestore Rules စစ်ဆေးပါ)', 'error');
             }
         };
 
@@ -1038,6 +1092,10 @@
 
         window.handleSaveAccount = async function(e) {
             e.preventDefault();
+            if (!currentAdminUser) {
+                showToast('Admin Login အရင်ဝင်ပါ', 'error');
+                return;
+            }
 
             const editId = document.getElementById('editAccountId').value;
             const title = document.getElementById('accTitle').value.trim();
@@ -1078,7 +1136,7 @@
                 showAdminTab('list');
             } catch (err) {
                 console.error(err);
-                showToast('Firestore Rules ကြောင့် သိမ်းမရပါ။ Rules စစ်ဆေးပါ။', 'error');
+                showToast('သိမ်းမရပါ။ Firestore Rules တွင် Authenticated Admin ခွင့်ပြုထားကြောင်း စစ်ဆေးပါ။', 'error');
             }
         };
 
@@ -1151,6 +1209,10 @@
         };
 
         window.executeDelete = async function(id) {
+            if (!currentAdminUser) {
+                showToast('Admin Login အရင်ဝင်ပါ', 'error');
+                return;
+            }
             try {
                 await deleteDoc(doc(db, "mlbb_accounts", id));
                 const modal = document.getElementById('deleteModalConfirm');
@@ -1158,20 +1220,8 @@
                 showToast('Account ကို ဖျက်ပစ်ပြီးပါပြီ', 'info');
             } catch (err) {
                 console.error(err);
-                showToast('Firestore Rules ကြောင့် ဖျက်မရပါ။ Rules စစ်ဆေးပါ။', 'error');
+                showToast('ဖျက်မရပါ။ Firestore Rules စစ်ဆေးပါ။', 'error');
             }
-        };
-
-        window.handleChangePassword = function(e) {
-            e.preventDefault();
-            const newPass = document.getElementById('newAdminPassword').value.trim();
-            if (newPass.length < 4) {
-                showToast('Password သည် အနည်းဆုံး ၄ လုံး ရှိရပါမည်', 'error');
-                return;
-            }
-            localStorage.setItem(STORAGE_KEY_PASS, newPass);
-            document.getElementById('newAdminPassword').value = '';
-            showToast('Admin Password ကို ပြောင်းလဲပြီးပါပြီ', 'success');
         };
 
         window.showToast = function(message, type = 'info') {
