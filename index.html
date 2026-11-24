@@ -352,7 +352,7 @@
                 </div>
             </div>
 
-            <!-- TOP BUNDLES (WEEKLY PASS, WEEKLY ELITE BUNDLE, MONTHLY EPIC BUNDLE - NO BUY TEXT) -->
+            <!-- TOP BUNDLES -->
             <div id="diaBundlesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Dynamically rendered -->
             </div>
@@ -362,7 +362,7 @@
                 <div class="rounded-2xl bg-darkcard border border-amber-500/35 overflow-hidden shadow-xl">
                     <div class="px-4 py-3 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border-b border-darkborder flex items-center justify-between">
                         <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider">
-                            <i class="fa-regular fa-gem mr-1.5"></i> Standard Packages (86 - 878)
+                            <i class="fa-regular fa-gem mr-1.5"></i> Standard Packages
                         </span>
                         <span class="text-[11px] text-gray-400">MMK (ကျပ်)</span>
                     </div>
@@ -374,7 +374,7 @@
                 <div class="rounded-2xl bg-darkcard border border-amber-500/35 overflow-hidden shadow-xl">
                     <div class="px-4 py-3 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border-b border-darkborder flex items-center justify-between">
                         <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider">
-                            <i class="fa-regular fa-gem mr-1.5"></i> High Packages (963 - 9288)
+                            <i class="fa-regular fa-gem mr-1.5"></i> High Packages
                         </span>
                         <span class="text-[11px] text-gray-400">MMK (ကျပ်)</span>
                     </div>
@@ -388,13 +388,20 @@
         <!-- STOREFRONT VIEW (HIDDEN UNTIL CLICKED) -->
         <div id="storefrontContent" class="hidden space-y-8">
 
-        <!-- HERO BANNER -->
+        <!-- HERO BANNER WITH BACK TO ENTRY GATEWAY BUTTON -->
         <div class="relative rounded-3xl overflow-hidden hero-light-border p-6 sm:p-8 md:p-10">
             <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="relative z-10 max-w-3xl">
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold leading-relaxed hero-vip-float font-display">
-                    Rina ရောင်းချပေးသောအကောင့်များကို စိတ်ချယုံကြည်စွာ ဝယ်ယူနိုင်ပါသည်
-                </h2>
+            <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="max-w-3xl">
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold leading-relaxed hero-vip-float font-display">
+                        Rina ရောင်းချပေးသောအကောင့်များကို စိတ်ချယုံကြည်စွာ ဝယ်ယူနိုင်ပါသည်
+                    </h2>
+                </div>
+                <button type="button" onclick="showEntryGateway()"
+                    class="self-start sm:self-center flex-shrink-0 px-4 py-2.5 rounded-xl bg-darkinput hover:bg-amber-500/15 text-amber-300 border border-amber-500/45 text-xs font-bold flex items-center gap-2 cursor-pointer transition-all">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>အစစာမျက်နှာသို့</span>
+                </button>
             </div>
         </div>
 
@@ -688,7 +695,7 @@
                                 <i class="fa-regular fa-gem"></i> Dia ဈေးပြင်ရန် (MLBB Diamond &amp; Pass Prices)
                             </h4>
                             <p class="text-xs text-gray-400 mt-0.5">
-                                Item နာမည်/ပမာဏ များကို အသေထားရှိပြီး ဘေးရှိ ဈေးနှုန်းအကွက်များတွင် ကြိုက်သလို ပြင်ဆင်သိမ်းဆည်းနိုင်ပါသည်
+                                Item နာမည်/ပမာဏ နှင့် ဈေးနှုန်း နှစ်ခုလုံးကို ကြိုက်သလို ပြင်ဆင်နိုင်ပြီး အကွက်အသစ်များလည်း ထပ်ထည့်နိုင်ပါသည်
                             </p>
                         </div>
                         <button type="button" onclick="handleSaveDiaPrices()"
@@ -699,17 +706,33 @@
                     </div>
 
                     <form id="diaPriceEditorForm" onsubmit="event.preventDefault(); handleSaveDiaPrices();" class="space-y-6">
+                        <!-- Editable Bundles -->
                         <div class="space-y-2.5">
-                            <p class="text-xs font-bold text-amber-300">Pass &amp; Bundles ဈေးနှုန်းများ</p>
-                            <div id="adminDiaBundleInputs" class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <!-- Dynamic bundle price inputs -->
+                            <div class="flex items-center justify-between gap-2">
+                                <p class="text-xs font-bold text-amber-300">Pass &amp; Bundles များ</p>
+                                <button type="button" onclick="addEditableBundleRow()"
+                                    class="px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-[11px] font-bold flex items-center gap-1.5 cursor-pointer transition-all">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Bundle အသစ်ထည့်မည်</span>
+                                </button>
+                            </div>
+                            <div id="adminDiaBundleInputs" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <!-- Dynamic editable bundle rows -->
                             </div>
                         </div>
 
+                        <!-- Editable Diamond Packages -->
                         <div class="space-y-2.5">
-                            <p class="text-xs font-bold text-amber-300">Diamond Packages ဈေးနှုန်းများ (86 - 9288)</p>
-                            <div id="adminDiaPackageInputs" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                                <!-- Dynamic diamond price inputs -->
+                            <div class="flex items-center justify-between gap-2">
+                                <p class="text-xs font-bold text-amber-300">Diamond Packages များ</p>
+                                <button type="button" onclick="addEditableDiamondRow()"
+                                    class="px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-[11px] font-bold flex items-center gap-1.5 cursor-pointer transition-all">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Dia Package အသစ်ထည့်မည်</span>
+                                </button>
+                            </div>
+                            <div id="adminDiaPackageInputs" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <!-- Dynamic editable diamond rows -->
                             </div>
                         </div>
 
@@ -777,51 +800,43 @@
         const auth = getAuth(app);
         const accountsCol = collection(db, "mlbb_accounts");
 
-        const DIA_BUNDLE_ITEMS = [
-            { key: 'weekly_pass', label: 'Weekly Pass', defaultPrice: 9000 },
-            { key: 'weekly_elite_bundle', label: 'Weekly Elite Bundle', defaultPrice: 5000 },
-            { key: 'monthly_epic_bundle', label: 'Monthly Epic Bundle', defaultPrice: 22100 }
-        ];
-
-        const DIA_LEFT_AMOUNTS = [86, 172, 257, 343, 429, 514, 600, 706, 878];
-        const DIA_RIGHT_AMOUNTS = [963, 1049, 1135, 1220, 1412, 2195, 3688, 5532, 9288];
-
-        const DEFAULT_DIA_PRICES = {
-            bundles: {
-                weekly_pass: 9000,
-                weekly_elite_bundle: 5000,
-                monthly_epic_bundle: 22100
-            },
-            diamonds: {
-                86: 6500,
-                172: 16000,
-                257: 20300,
-                343: 26800,
-                429: 36300,
-                514: 40600,
-                600: 47100,
-                706: 51000,
-                878: 67000,
-                963: 71300,
-                1049: 77800,
-                1135: 87300,
-                1220: 91600,
-                1412: 102000,
-                2195: 151300,
-                3688: 256000,
-                5532: 386000,
-                9288: 631200
-            }
+        const DEFAULT_DIA_DATA = {
+            bundles: [
+                { id: 'b-weekly-pass', label: 'Weekly Pass', price: 9000 },
+                { id: 'b-weekly-elite', label: 'Weekly Elite Bundle', price: 5000 },
+                { id: 'b-monthly-epic', label: 'Monthly Epic Bundle', price: 22100 }
+            ],
+            packages: [
+                { id: 'd-86', amount: '86', price: 6500, section: 'left' },
+                { id: 'd-172', amount: '172', price: 16000, section: 'left' },
+                { id: 'd-257', amount: '257', price: 20300, section: 'left' },
+                { id: 'd-343', amount: '343', price: 26800, section: 'left' },
+                { id: 'd-429', amount: '429', price: 36300, section: 'left' },
+                { id: 'd-514', amount: '514', price: 40600, section: 'left' },
+                { id: 'd-600', amount: '600', price: 47100, section: 'left' },
+                { id: 'd-706', amount: '706', price: 51000, section: 'left' },
+                { id: 'd-878', amount: '878', price: 67000, section: 'left' },
+                { id: 'd-963', amount: '963', price: 71300, section: 'right' },
+                { id: 'd-1049', amount: '1049', price: 77800, section: 'right' },
+                { id: 'd-1135', amount: '1135', price: 87300, section: 'right' },
+                { id: 'd-1220', amount: '1220', price: 91600, section: 'right' },
+                { id: 'd-1412', amount: '1412', price: 102000, section: 'right' },
+                { id: 'd-2195', amount: '2195', price: 151300, section: 'right' },
+                { id: 'd-3688', amount: '3688', price: 256000, section: 'right' },
+                { id: 'd-5532', amount: '5532', price: 386000, section: 'right' },
+                { id: 'd-9288', amount: '9288', price: 631200, section: 'right' }
+            ]
         };
 
-        function cloneDefaultDiaPrices() {
+        function cloneDefaultDiaData() {
             return {
-                bundles: { ...DEFAULT_DIA_PRICES.bundles },
-                diamonds: { ...DEFAULT_DIA_PRICES.diamonds }
+                bundles: DEFAULT_DIA_DATA.bundles.map(b => ({ ...b })),
+                packages: DEFAULT_DIA_DATA.packages.map(p => ({ ...p }))
             };
         }
 
-        let diaPrices = cloneDefaultDiaPrices();
+        let diaData = cloneDefaultDiaData();
+        let draftDiaData = cloneDefaultDiaData();
         const diaPricesDocRef = doc(db, "store_settings", "mlbb_dia_prices");
 
         let accounts = [];
@@ -908,6 +923,7 @@
                     document.getElementById('adminLoginView').classList.add('hidden');
                     document.getElementById('adminDashboardView').classList.remove('hidden');
                     renderAdminTable();
+                    resetDraftFromDiaData();
                     renderAdminDiaEditor();
                 } else {
                     if (adminBtnText) adminBtnText.innerText = "Admin Panel";
@@ -918,28 +934,61 @@
             });
         }
 
-        function normalizeDiaPricesData(raw) {
-            const merged = cloneDefaultDiaPrices();
-            if (!raw || typeof raw !== 'object') return merged;
-
-            if (raw.bundles && typeof raw.bundles === 'object') {
-                DIA_BUNDLE_ITEMS.forEach((b) => {
-                    const val = Number(raw.bundles[b.key]);
-                    if (!Number.isNaN(val) && val >= 0) {
-                        merged.bundles[b.key] = val;
-                    }
-                });
+        function normalizeDiaData(raw) {
+            if (!raw || typeof raw !== 'object') {
+                return cloneDefaultDiaData();
             }
 
-            if (raw.diamonds && typeof raw.diamonds === 'object') {
-                [...DIA_LEFT_AMOUNTS, ...DIA_RIGHT_AMOUNTS].forEach((amt) => {
-                    const val = Number(raw.diamonds[String(amt)] ?? raw.diamonds[amt]);
-                    if (!Number.isNaN(val) && val >= 0) {
-                        merged.diamonds[amt] = val;
-                    }
-                });
+            let bundles = [];
+            if (Array.isArray(raw.bundles)) {
+                bundles = raw.bundles.map((b, idx) => ({
+                    id: b.id || `bundle-${idx}-${Date.now()}`,
+                    label: String(b.label ?? '').trim(),
+                    price: Number(b.price ?? 0)
+                }));
+            } else if (raw.bundles && typeof raw.bundles === 'object') {
+                const mapLabels = {
+                    weekly_pass: 'Weekly Pass',
+                    weekly_elite_bundle: 'Weekly Elite Bundle',
+                    monthly_epic_bundle: 'Monthly Epic Bundle'
+                };
+                bundles = Object.entries(raw.bundles).map(([k, v], idx) => ({
+                    id: `bundle-${k}-${idx}`,
+                    label: mapLabels[k] || k,
+                    price: Number(v ?? 0)
+                }));
             }
-            return merged;
+
+            let packages = [];
+            if (Array.isArray(raw.packages)) {
+                packages = raw.packages.map((p, idx) => ({
+                    id: p.id || `pkg-${idx}-${Date.now()}`,
+                    amount: String(p.amount ?? '').trim(),
+                    price: Number(p.price ?? 0),
+                    section: p.section === 'right' ? 'right' : 'left'
+                }));
+            } else if (raw.diamonds && typeof raw.diamonds === 'object') {
+                const entries = Object.entries(raw.diamonds);
+                const mid = Math.ceil(entries.length / 2);
+                packages = entries.map(([amt, prc], idx) => ({
+                    id: `pkg-${amt}-${idx}`,
+                    amount: String(amt).trim(),
+                    price: Number(prc ?? 0),
+                    section: idx < mid ? 'left' : 'right'
+                }));
+            }
+
+            return {
+                bundles: bundles.length > 0 ? bundles : cloneDefaultDiaData().bundles,
+                packages: packages.length > 0 ? packages : cloneDefaultDiaData().packages
+            };
+        }
+
+        function resetDraftFromDiaData() {
+            draftDiaData = {
+                bundles: diaData.bundles.map(b => ({ ...b })),
+                packages: diaData.packages.map(p => ({ ...p }))
+            };
         }
 
         function renderDiaPricesView() {
@@ -948,10 +997,11 @@
             const rightList = document.getElementById('diaRightList');
             if (!bundlesGrid || !leftList || !rightList) return;
 
-            bundlesGrid.innerHTML = DIA_BUNDLE_ITEMS.map((item) => {
-                const priceVal = Number(diaPrices.bundles[item.key] ?? item.defaultPrice);
+            bundlesGrid.innerHTML = diaData.bundles.map((item) => {
+                const labelText = item.label || 'Bundle';
+                const priceVal = Number(item.price || 0);
                 const formatted = priceVal.toLocaleString();
-                const tgMsg = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ MLBB ${item.label} (ဈေးနှုန်း: ${formatted} Ks) ဝယ်ယူလိုပါသည်။`);
+                const tgMsg = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ MLBB ${labelText} (ဈေးနှုန်း: ${formatted} Ks) ဝယ်ယူလိုပါသည်။`);
                 return `
                     <a href="https://t.me/lilrina2k2?text=${tgMsg}" target="_blank" rel="noopener noreferrer"
                         class="group rounded-2xl bg-darkcard border border-amber-500/40 hover:border-amber-400 p-4 flex items-center gap-3 shadow-lg transition-all">
@@ -959,31 +1009,51 @@
                             <i class="fa-regular fa-gem text-base"></i>
                         </div>
                         <div class="min-w-0">
-                            <p class="text-xs sm:text-sm font-extrabold text-white group-hover:text-amber-300 transition-colors truncate">${item.label}</p>
+                            <p class="text-xs sm:text-sm font-extrabold text-white group-hover:text-amber-300 transition-colors truncate">${labelText}</p>
                             <p class="text-xs sm:text-sm text-amber-400 font-extrabold mt-0.5">${formatted} ks</p>
                         </div>
                     </a>
                 `;
             }).join('');
 
-            const buildBox = (amt) => {
-                const priceVal = Number(diaPrices.diamonds[amt] ?? DEFAULT_DIA_PRICES.diamonds[amt] ?? 0);
+            const buildBox = (pkg) => {
+                const amtText = pkg.amount || 'Dia';
+                const priceVal = Number(pkg.price || 0);
                 const formatted = priceVal.toLocaleString();
-                const tgMsg = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ MLBB ${amt} Diamonds (ဈေးနှုန်း: ${formatted} Ks) ဝယ်ယူလိုပါသည်။`);
+                const tgMsg = encodeURIComponent(`မင်္ဂလာပါ @lilrina2k2၊ MLBB ${amtText} Diamonds (ဈေးနှုန်း: ${formatted} Ks) ဝယ်ယူလိုပါသည်။`);
                 return `
                     <a href="https://t.me/lilrina2k2?text=${tgMsg}" target="_blank" rel="noopener noreferrer"
                         class="rounded-xl bg-darkbg hover:bg-amber-500/10 border border-darkborder hover:border-amber-500/50 px-3 py-2.5 flex items-center justify-between gap-2 transition-all">
                         <span class="text-xs sm:text-sm font-extrabold text-white tracking-wide flex items-center gap-1.5">
                             <i class="fa-regular fa-gem text-amber-400 text-xs"></i>
-                            <span>${amt}</span>
+                            <span>${amtText}</span>
                         </span>
                         <span class="text-xs sm:text-sm font-extrabold text-amber-400 whitespace-nowrap">${formatted} ks</span>
                     </a>
                 `;
             };
 
-            leftList.innerHTML = DIA_LEFT_AMOUNTS.map(buildBox).join('');
-            rightList.innerHTML = DIA_RIGHT_AMOUNTS.map(buildBox).join('');
+            const leftPkgs = diaData.packages.filter(p => p.section !== 'right');
+            const rightPkgs = diaData.packages.filter(p => p.section === 'right');
+
+            leftList.innerHTML = leftPkgs.map(buildBox).join('');
+            rightList.innerHTML = rightPkgs.map(buildBox).join('');
+        }
+
+        function syncDraftInputsFromDom() {
+            draftDiaData.bundles.forEach((b) => {
+                const labelEl = document.getElementById(`diaBundleLabel-${b.id}`);
+                const priceEl = document.getElementById(`diaBundlePrice-${b.id}`);
+                if (labelEl) b.label = labelEl.value;
+                if (priceEl) b.price = priceEl.value;
+            });
+
+            draftDiaData.packages.forEach((p) => {
+                const amtEl = document.getElementById(`diaPkgAmount-${p.id}`);
+                const priceEl = document.getElementById(`diaPkgPrice-${p.id}`);
+                if (amtEl) p.amount = amtEl.value;
+                if (priceEl) p.price = priceEl.value;
+            });
         }
 
         function renderAdminDiaEditor() {
@@ -991,50 +1061,88 @@
             const diaContainer = document.getElementById('adminDiaPackageInputs');
             if (!bundleContainer || !diaContainer) return;
 
-            bundleContainer.innerHTML = DIA_BUNDLE_ITEMS.map((item) => {
-                const val = Number(diaPrices.bundles[item.key] ?? item.defaultPrice);
-                return `
-                    <div class="bg-darkbg border border-darkborder rounded-xl p-3 space-y-1.5">
-                        <label for="diaBundleInput-${item.key}" class="block text-xs font-bold text-gray-200">
-                            ${item.label}
-                        </label>
-                        <div class="flex items-center gap-2">
-                            <input type="number" min="0" step="1" id="diaBundleInput-${item.key}" value="${val}" required
-                                class="w-full bg-darkinput border border-darkborder focus:border-amber-500 rounded-lg px-3 py-2 text-xs font-bold text-amber-300 focus:outline-none">
+            bundleContainer.innerHTML = draftDiaData.bundles.map((item) => `
+                <div class="bg-darkbg border border-darkborder rounded-xl p-3 flex items-center gap-2">
+                    <div class="flex-1 min-w-0 space-y-1.5">
+                        <input type="text" id="diaBundleLabel-${item.id}" value="${String(item.label).replace(/"/g, '&quot;')}" placeholder="Bundle အမည် (ဥပမာ- Weekly Pass)" required
+                            class="w-full bg-darkinput border border-darkborder focus:border-amber-500 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white focus:outline-none">
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" min="0" step="1" id="diaBundlePrice-${item.id}" value="${Number(item.price || 0)}" placeholder="ဈေးနှုန်း" required
+                                class="w-full bg-darkinput border border-darkborder focus:border-amber-500 rounded-lg px-2.5 py-1.5 text-xs font-bold text-amber-300 focus:outline-none">
                             <span class="text-[11px] font-bold text-gray-400 flex-shrink-0">ks</span>
                         </div>
                     </div>
-                `;
-            }).join('');
+                    <button type="button" onclick="removeEditableBundleRow('${item.id}')" title="ဖျက်ရန်"
+                        class="self-stretch px-2.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs cursor-pointer transition-all">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            `).join('');
 
-            const allAmounts = [...DIA_LEFT_AMOUNTS, ...DIA_RIGHT_AMOUNTS];
-            diaContainer.innerHTML = allAmounts.map((amt) => {
-                const val = Number(diaPrices.diamonds[amt] ?? DEFAULT_DIA_PRICES.diamonds[amt] ?? 0);
-                return `
-                    <div class="bg-darkbg border border-darkborder rounded-xl px-3 py-2.5 flex items-center justify-between gap-2.5">
-                        <label for="diaPkgInput-${amt}" class="text-xs font-extrabold text-white flex items-center gap-1.5 flex-shrink-0">
-                            <i class="fa-regular fa-gem text-amber-400"></i>
-                            <span>${amt}</span>
-                        </label>
-                        <div class="flex items-center gap-1.5 flex-1 max-w-[150px]">
-                            <input type="number" min="0" step="1" id="diaPkgInput-${amt}" value="${val}" required
-                                class="w-full bg-darkinput border border-darkborder focus:border-amber-500 rounded-lg px-2.5 py-1.5 text-xs font-bold text-amber-300 text-right focus:outline-none">
-                            <span class="text-[11px] font-bold text-gray-400 flex-shrink-0">ks</span>
-                        </div>
+            diaContainer.innerHTML = draftDiaData.packages.map((pkg) => `
+                <div class="bg-darkbg border border-darkborder rounded-xl p-2.5 flex items-center gap-2">
+                    <div class="w-24 flex-shrink-0 flex items-center gap-1 bg-darkinput border border-darkborder rounded-lg px-2 py-1.5">
+                        <i class="fa-regular fa-gem text-amber-400 text-xs"></i>
+                        <input type="text" id="diaPkgAmount-${pkg.id}" value="${String(pkg.amount).replace(/"/g, '&quot;')}" placeholder="Dia" required
+                            class="w-full bg-transparent text-xs font-extrabold text-white focus:outline-none">
                     </div>
-                `;
-            }).join('');
+                    <div class="flex-1 flex items-center gap-1 min-w-0">
+                        <input type="number" min="0" step="1" id="diaPkgPrice-${pkg.id}" value="${Number(pkg.price || 0)}" placeholder="ဈေးနှုန်း" required
+                            class="w-full bg-darkinput border border-darkborder focus:border-amber-500 rounded-lg px-2.5 py-1.5 text-xs font-bold text-amber-300 text-right focus:outline-none">
+                        <span class="text-[11px] font-bold text-gray-400 flex-shrink-0">ks</span>
+                    </div>
+                    <button type="button" onclick="removeEditableDiamondRow('${pkg.id}')" title="ဖျက်ရန်"
+                        class="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs cursor-pointer transition-all flex-shrink-0">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            `).join('');
         }
+
+        window.addEditableBundleRow = function() {
+            syncDraftInputsFromDom();
+            draftDiaData.bundles.push({
+                id: 'bundle-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+                label: '',
+                price: 0
+            });
+            renderAdminDiaEditor();
+        };
+
+        window.removeEditableBundleRow = function(id) {
+            syncDraftInputsFromDom();
+            draftDiaData.bundles = draftDiaData.bundles.filter(b => b.id !== id);
+            renderAdminDiaEditor();
+        };
+
+        window.addEditableDiamondRow = function() {
+            syncDraftInputsFromDom();
+            const nextSection = draftDiaData.packages.length % 2 === 0 ? 'left' : 'right';
+            draftDiaData.packages.push({
+                id: 'pkg-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+                amount: '',
+                price: 0,
+                section: nextSection
+            });
+            renderAdminDiaEditor();
+        };
+
+        window.removeEditableDiamondRow = function(id) {
+            syncDraftInputsFromDom();
+            draftDiaData.packages = draftDiaData.packages.filter(p => p.id !== id);
+            renderAdminDiaEditor();
+        };
 
         function initDiaPricesSync() {
             onSnapshot(diaPricesDocRef, (docSnap) => {
                 if (docSnap.exists()) {
-                    diaPrices = normalizeDiaPricesData(docSnap.data());
+                    diaData = normalizeDiaData(docSnap.data());
                 } else {
-                    diaPrices = cloneDefaultDiaPrices();
+                    diaData = cloneDefaultDiaData();
                 }
                 renderDiaPricesView();
                 if (currentAdminUser) {
+                    resetDraftFromDiaData();
                     renderAdminDiaEditor();
                 }
             }, (error) => {
@@ -1060,39 +1168,59 @@
                 return;
             }
 
-            const nextBundles = {};
-            for (const item of DIA_BUNDLE_ITEMS) {
-                const el = document.getElementById(`diaBundleInput-${item.key}`);
-                const num = Number(el ? el.value : item.defaultPrice);
-                if (Number.isNaN(num) || num < 0) {
-                    showToast(`${item.label} ဈေးနှုန်း မှန်ကန်စွာ ထည့်ပါ`, 'error');
+            syncDraftInputsFromDom();
+
+            const cleanedBundles = [];
+            for (const b of draftDiaData.bundles) {
+                const labelVal = String(b.label || '').trim();
+                const priceVal = Number(b.price);
+                if (!labelVal) {
+                    showToast('Bundle အမည် ထည့်သွင်းပါ', 'error');
                     return;
                 }
-                nextBundles[item.key] = Math.round(num);
+                if (Number.isNaN(priceVal) || priceVal < 0) {
+                    showToast(`${labelVal} ဈေးနှုန်း မှန်ကန်စွာ ထည့်ပါ`, 'error');
+                    return;
+                }
+                cleanedBundles.push({
+                    id: b.id,
+                    label: labelVal,
+                    price: Math.round(priceVal)
+                });
             }
 
-            const nextDiamonds = {};
-            const allAmounts = [...DIA_LEFT_AMOUNTS, ...DIA_RIGHT_AMOUNTS];
-            for (const amt of allAmounts) {
-                const el = document.getElementById(`diaPkgInput-${amt}`);
-                const num = Number(el ? el.value : (DEFAULT_DIA_PRICES.diamonds[amt] ?? 0));
-                if (Number.isNaN(num) || num < 0) {
-                    showToast(`${amt} Dia ဈေးနှုန်း မှန်ကန်စွာ ထည့်ပါ`, 'error');
+            const cleanedPackages = [];
+            for (const p of draftDiaData.packages) {
+                const amtVal = String(p.amount || '').trim();
+                const priceVal = Number(p.price);
+                if (!amtVal) {
+                    showToast('Dia ပမာဏ ထည့်သွင်းပါ', 'error');
                     return;
                 }
-                nextDiamonds[String(amt)] = Math.round(num);
+                if (Number.isNaN(priceVal) || priceVal < 0) {
+                    showToast(`${amtVal} Dia ဈေးနှုန်း မှန်ကန်စွာ ထည့်ပါ`, 'error');
+                    return;
+                }
+                cleanedPackages.push({
+                    id: p.id,
+                    amount: amtVal,
+                    price: Math.round(priceVal),
+                    section: p.section === 'right' ? 'right' : 'left'
+                });
             }
 
             const payload = {
-                bundles: nextBundles,
-                diamonds: nextDiamonds,
+                bundles: cleanedBundles,
+                packages: cleanedPackages,
                 updatedAt: Date.now()
             };
 
             try {
-                await setDoc(diaPricesDocRef, payload, { merge: true });
-                diaPrices = normalizeDiaPricesData(payload);
+                await setDoc(diaPricesDocRef, payload);
+                diaData = normalizeDiaData(payload);
+                resetDraftFromDiaData();
                 renderDiaPricesView();
+                renderAdminDiaEditor();
                 showToast('MLBB Dia ဈေးနှုန်းများ သိမ်းဆည်းပြီးပါပြီ', 'success');
             } catch (err) {
                 console.error("Save dia prices error:", err);
@@ -1445,6 +1573,7 @@
                 document.getElementById('adminLoginView').classList.add('hidden');
                 document.getElementById('adminDashboardView').classList.remove('hidden');
                 renderAdminTable();
+                resetDraftFromDiaData();
                 renderAdminDiaEditor();
             } else {
                 document.getElementById('adminLoginView').classList.remove('hidden');
@@ -1516,7 +1645,10 @@
             document.getElementById(`adminSection-${tabName}`).classList.remove('hidden');
 
             if (tabName === 'list') renderAdminTable();
-            if (tabName === 'dia') renderAdminDiaEditor();
+            if (tabName === 'dia') {
+                resetDraftFromDiaData();
+                renderAdminDiaEditor();
+            }
         };
 
         window.renderAdminTable = function() {
