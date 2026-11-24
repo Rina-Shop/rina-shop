@@ -204,6 +204,19 @@
             z-index: -1;
             animation: borderLightOrbit 4.5s linear infinite;
         }
+
+        @keyframes splashCardFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .splash-entry-card {
+            animation: splashCardFloat 3.6s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black">
@@ -213,7 +226,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
             
             <!-- BRAND LOGO WITH UPLOADED IMAGE -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="resetFilters()">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showEntryGateway()">
                 <div class="relative w-12 h-12 rounded-full overflow-hidden coin-glow flex-shrink-0 border border-amber-400/60 bg-darkbg">
                     <img src="IMG_20261123_150211_100.jpg" alt="RINA SHOP 24/7 Logo" class="w-full h-full object-cover">
                 </div>
@@ -259,6 +272,41 @@
 
     <!-- MAIN CONTENT AREA -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+
+        <!-- ENTRY GATEWAY / SPLASH VIEW -->
+        <section id="entryGateway" class="py-6 sm:py-10 flex items-center justify-center">
+            <div class="splash-entry-card w-full max-w-xl rounded-3xl hero-light-border p-6 sm:p-8 text-center space-y-6">
+                <div class="relative w-full h-52 sm:h-64 rounded-2xl overflow-hidden border border-amber-500/40 bg-darkbg shadow-xl">
+                    <img id="mlbbSplashImg" src="mlbb-banner.jpg" alt="Mobile Legends Account Banner"
+                        onerror="this.onerror=null; this.src='IMG_20261123_150211_100.jpg';"
+                        class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none"></div>
+                    <span class="absolute bottom-3 left-3 bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[11px] font-bold px-3 py-1 rounded-full backdrop-blur-sm">
+                        <i class="fa-solid fa-gamepad mr-1"></i> MOBILE LEGENDS VIP CENTER
+                    </span>
+                </div>
+
+                <div class="space-y-2">
+                    <h2 class="text-xl sm:text-2xl font-extrabold hero-vip-float font-display">
+                        Mobile Legend အကောင့်များကြည့်ရန်
+                    </h2>
+                    <p class="text-xs sm:text-sm text-gray-400">
+                        ရောင်းချရန် အသင့်ရှိသော Account စာရင်းများကို ကြည့်ရှုရန် အောက်ပါခလုတ်ကို နှိပ်ပါ
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-1">
+                    <button type="button" onclick="enterStorefront()"
+                        class="w-full sm:w-auto px-7 py-3.5 rounded-2xl gold-gradient-btn text-black font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                        <span>Mobile Legend အကောင့်များကြည့်ရန်</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STOREFRONT VIEW (HIDDEN UNTIL CLICKED) -->
+        <div id="storefrontContent" class="hidden space-y-8">
 
         <!-- HERO BANNER -->
         <div class="relative rounded-3xl overflow-hidden hero-light-border p-6 sm:p-8 md:p-10">
@@ -316,6 +364,7 @@
             <button onclick="resetFilters()" class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-400 text-xs font-semibold border border-amber-500/30 hover:bg-amber-500/30 transition-all">
                 မူလအတိုင်း ပြန်ကြည့်မည်
             </button>
+        </div>
         </div>
     </main>
 
@@ -839,11 +888,28 @@
         window.filterAccounts = function() { renderAccounts(); };
         window.filterAccountsMobile = function() { renderAccounts(); };
 
+        window.enterStorefront = function() {
+            const gateway = document.getElementById('entryGateway');
+            const storefront = document.getElementById('storefrontContent');
+            if (gateway) gateway.classList.add('hidden');
+            if (storefront) storefront.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.showEntryGateway = function() {
+            const gateway = document.getElementById('entryGateway');
+            const storefront = document.getElementById('storefrontContent');
+            if (storefront) storefront.classList.add('hidden');
+            if (gateway) gateway.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
         window.resetFilters = function() {
             document.getElementById('searchInputDesktop').value = '';
             document.getElementById('searchInputMobile').value = '';
             document.getElementById('sortSelect').value = 'newest';
             setFilter('ALL');
+            enterStorefront();
         };
 
         window.openAccountDetails = function(id) {
